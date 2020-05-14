@@ -2,13 +2,10 @@ package com.openwatchproject.watchface;
 
 public class OpenWatchWatchFaceConstants {
     public static final String WATCH_FACE_FILE_EXTENSION = ".owf";
-    public static final String CLOCK_SKIN_XML = "clock_skin.xml";
-    public static final String CLOCK_SKIN_PREVIEW = "clock_skin_model.png";
 
     public static final int DIRECTION_NORMAL = 1;
     public static final int DIRECTION_REVERSE = 2;
 
-    public static final int ROTATABLE_NONE = 0;
     public static final int ROTATABLE_HOUR = 1;
     public static final int ROTATABLE_MINUTE = 2;
     public static final int ROTATABLE_SECOND = 3;

@@ -94,7 +94,7 @@ public class OpenWatchFaceDeserializer {
         int rotatableType = itemObject.get("rotatableType").getAsInt();
 
         switch (rotatableType) {
-            case OpenWatchWatchFaceConstants.ROTATABLE_NONE:
+            case OpenWatchWatchFaceConstants.ROTATABLE_HOUR:
 
                 break;
         }
