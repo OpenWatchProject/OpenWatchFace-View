@@ -22,7 +22,7 @@ public class OpenWatchWatchFaceConstants {
     public static final int ROTATE_DAY = 20;
     public static final int ROTATE_STEPS_TARGET = 101; // Not available in WFD
 
-    public static final int TYPE_NONE = 0;
+    public static final int TYPE_ROTATABLE = 0;
     public static final int TYPE_YEAR_MONTH_DAY = 1;
     public static final int TYPE_MONTH_DAY = 2;
     public static final int TYPE_MONTH = 3;

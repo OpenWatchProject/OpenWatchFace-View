@@ -11,14 +11,21 @@ public class OpenWatchWatchFace {
     private final Calendar calendar;
 
     /**
+     * The OpenWatch WatchFace format version
+     */
+    private static final int VERSION = 1;
+
+    private String name;
+
+    /**
      * The width in pixels for which this WatchFace was designed for.
      */
-    private int width = 400;
+    private int width;
 
     /**
      * The height in pixels for which this WatchFace was designed for.
      */
-    private int height = 400;
+    private int height;
 
     /**
      * The items that form this WatchFace.
@@ -27,6 +34,8 @@ public class OpenWatchWatchFace {
 
     public OpenWatchWatchFace() {
         this.calendar = Calendar.getInstance();
+        this.width = 400;
+        this.height = 400;
         this.items = new ArrayList<>();
     }
 
@@ -36,6 +45,14 @@ public class OpenWatchWatchFace {
 
     public Calendar getCalendar() {
         return calendar;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
     }
 
     public void setWidth(int width) {

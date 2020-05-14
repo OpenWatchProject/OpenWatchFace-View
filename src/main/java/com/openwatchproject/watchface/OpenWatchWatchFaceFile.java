@@ -1,5 +1,7 @@
 package com.openwatchproject.watchface;
 
+import android.graphics.Bitmap;
+
 import androidx.annotation.NonNull;
 
 import com.google.gson.Gson;
@@ -13,9 +15,16 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
 public class OpenWatchWatchFaceFile {
+    private static final String METADATA_JSON = "metadata.json";
     private static final String WATCHFACE_JSON = "watchface.json";
 
     private final File file;
+    private OpenWatchWatchFaceMetadata metadata;
+    private Bitmap preview;
+
+    public OpenWatchWatchFaceFile(String filePath) {
+        this.file = new File(filePath);
+    }
 
     public OpenWatchWatchFaceFile(File file) {
         this.file = file;
@@ -43,5 +52,17 @@ public class OpenWatchWatchFaceFile {
 
             return zipFile.getInputStream(entry);
         }
+    }
+
+    public Bitmap getPreview() {
+        return preview;
+    }
+
+    public OpenWatchWatchFaceMetadata getMetadata() {
+        return metadata;
+    }
+
+    public boolean isValid() {
+        return true;
     }
 }
