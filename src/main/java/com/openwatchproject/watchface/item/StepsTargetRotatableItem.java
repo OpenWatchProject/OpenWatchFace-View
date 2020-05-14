@@ -1,6 +1,14 @@
 package com.openwatchproject.watchface.item;
 
+import android.graphics.drawable.Drawable;
+
+import java.util.ArrayList;
+
 public class StepsTargetRotatableItem extends RotatableItem {
+    public StepsTargetRotatableItem(int centerX, int centerY, ArrayList<Drawable> frames) {
+        super(centerX, centerY, frames);
+    }
+
     @Override
     float getAngle() {
         /*if (dataRepository == null) break;

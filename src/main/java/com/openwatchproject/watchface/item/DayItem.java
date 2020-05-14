@@ -3,13 +3,15 @@ package com.openwatchproject.watchface.item;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
 public class DayItem extends AbstractItem {
     private final Calendar calendar;
 
-    public DayItem(Calendar calendar) {
+    public DayItem(int centerX, int centerY, ArrayList<Drawable> frames, Calendar calendar) {
+        super(centerX, centerY, frames);
         this.calendar = calendar;
     }
 

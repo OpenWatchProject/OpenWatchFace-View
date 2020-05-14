@@ -3,6 +3,8 @@ package com.openwatchproject.watchface.item;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
 
+import com.google.gson.JsonElement;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -81,8 +83,10 @@ public abstract class AbstractItem {
     int radius;
     int repeat;
 
-    public AbstractItem() {
-        this.frames = new ArrayList<>();
+    public AbstractItem(int centerX, int centerY, ArrayList<Drawable> frames) {
+        this.centerX = centerX;
+        this.centerY = centerY;
+        this.frames = frames;
     }
 
     public void setCenterX(int centerX) {

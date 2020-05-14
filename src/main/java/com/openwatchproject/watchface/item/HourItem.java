@@ -4,13 +4,15 @@ import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
 import android.text.format.DateFormat;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
 public class HourItem extends AbstractItem {
     private final Calendar calendar;
 
-    public HourItem(Calendar calendar) {
+    public HourItem(int centerX, int centerY, ArrayList<Drawable> frames, Calendar calendar) {
+        super(centerX, centerY, frames);
         this.calendar = calendar;
     }
 

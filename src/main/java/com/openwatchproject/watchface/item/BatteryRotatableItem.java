@@ -1,9 +1,17 @@
 package com.openwatchproject.watchface.item;
 
+import android.graphics.drawable.Drawable;
+
 import com.openwatchproject.watchface.OpenWatchWatchFaceConstants;
 import com.openwatchproject.watchface.SystemUtils;
 
+import java.util.ArrayList;
+
 public class BatteryRotatableItem extends RotatableItem {
+    public BatteryRotatableItem(int centerX, int centerY, ArrayList<Drawable> frames) {
+        super(centerX, centerY, frames);
+    }
+
     @Override
     float getAngle() {
         int battery = SystemUtils.getBatteryPercentage();

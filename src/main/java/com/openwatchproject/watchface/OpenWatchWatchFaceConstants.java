@@ -1,27 +1,29 @@
 package com.openwatchproject.watchface;
 
 public class OpenWatchWatchFaceConstants {
+    public static final String WATCH_FACE_FILE_EXTENSION = ".owf";
     public static final String CLOCK_SKIN_XML = "clock_skin.xml";
     public static final String CLOCK_SKIN_PREVIEW = "clock_skin_model.png";
 
     public static final int DIRECTION_NORMAL = 1;
     public static final int DIRECTION_REVERSE = 2;
 
-    public static final int ROTATE_NONE = 0;
-    public static final int ROTATE_HOUR = 1;
-    public static final int ROTATE_MINUTE = 2;
-    public static final int ROTATE_SECOND = 3;
-    public static final int ROTATE_MONTH = 4;
-    public static final int ROTATE_DAY_OF_WEEK = 5;
-    public static final int ROTATE_BATTERY = 6;
-    public static final int ROTATE_DAY_NIGHT = 7;
-    public static final int ROTATE_HOUR_SHADOW = 8;
-    public static final int ROTATE_MINUTE_SHADOW = 9;
-    public static final int ROTATE_SECOND_SHADOW = 10;
-    public static final int ROTATE_BATTERY_CIRCLE = 11; // Not available in WFD
-    public static final int ROTATE_DAY = 20;
-    public static final int ROTATE_STEPS_TARGET = 101; // Not available in WFD
+    public static final int ROTATABLE_NONE = 0;
+    public static final int ROTATABLE_HOUR = 1;
+    public static final int ROTATABLE_MINUTE = 2;
+    public static final int ROTATABLE_SECOND = 3;
+    public static final int ROTATABLE_MONTH = 4;
+    public static final int ROTATABLE_DAY_OF_WEEK = 5;
+    public static final int ROTATABLE_BATTERY = 6;
+    public static final int ROTATABLE_DAY_NIGHT = 7;
+    public static final int ROTATABLE_HOUR_SHADOW = 8;
+    public static final int ROTATABLE_MINUTE_SHADOW = 9;
+    public static final int ROTATABLE_SECOND_SHADOW = 10;
+    public static final int ROTATABLE_BATTERY_CIRCLE = 11; // Not available in WFD
+    public static final int ROTATABLE_DAY = 20;
+    public static final int ROTATABLE_STEPS_TARGET = 101; // Not available in WFD
 
+    public static final int TYPE_STATIC = -1;
     public static final int TYPE_ROTATABLE = 0;
     public static final int TYPE_YEAR_MONTH_DAY = 1;
     public static final int TYPE_MONTH_DAY = 2;

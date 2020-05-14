@@ -1,13 +1,17 @@
 package com.openwatchproject.watchface.item;
 
+import android.graphics.drawable.Drawable;
+
 import com.openwatchproject.watchface.OpenWatchWatchFaceConstants;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 
 public class HourShadowRotatableItem extends RotatableItem {
     private final Calendar calendar;
 
-    public HourShadowRotatableItem(Calendar calendar) {
+    public HourShadowRotatableItem(int centerX, int centerY, ArrayList<Drawable> frames, Calendar calendar) {
+        super(centerX, centerY, frames);
         this.calendar = calendar;
     }
 

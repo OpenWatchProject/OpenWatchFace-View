@@ -3,6 +3,8 @@ package com.openwatchproject.watchface.item;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
 
+import java.util.ArrayList;
+
 public abstract class RotatableItem extends AbstractItem {
 
     /**
@@ -16,6 +18,10 @@ public abstract class RotatableItem extends AbstractItem {
      * Only valid if type == 0
      */
     int rotationFactor;
+
+    public RotatableItem(int centerX, int centerY, ArrayList<Drawable> frames) {
+        super(centerX, centerY, frames);
+    }
 
     public void setRotationFactor(int rotationFactor) {
         this.rotationFactor = rotationFactor;

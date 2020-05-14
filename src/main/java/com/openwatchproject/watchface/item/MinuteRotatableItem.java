@@ -1,11 +1,15 @@
 package com.openwatchproject.watchface.item;
 
+import android.graphics.drawable.Drawable;
+
+import java.util.ArrayList;
 import java.util.Calendar;
 
 public class MinuteRotatableItem extends RotatableItem {
     private final Calendar calendar;
 
-    public MinuteRotatableItem(Calendar calendar) {
+    public MinuteRotatableItem(int centerX, int centerY, ArrayList<Drawable> frames, Calendar calendar) {
+        super(centerX, centerY, frames);
         this.calendar = calendar;
     }
 
