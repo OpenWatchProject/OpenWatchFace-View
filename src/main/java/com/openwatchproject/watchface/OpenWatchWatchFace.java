@@ -15,8 +15,6 @@ public class OpenWatchWatchFace {
      */
     private static final int VERSION = 1;
 
-    private String name;
-
     /**
      * The width in pixels for which this WatchFace was designed for.
      */
@@ -45,14 +43,6 @@ public class OpenWatchWatchFace {
 
     public Calendar getCalendar() {
         return calendar;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getName() {
-        return name;
     }
 
     public void setWidth(int width) {
