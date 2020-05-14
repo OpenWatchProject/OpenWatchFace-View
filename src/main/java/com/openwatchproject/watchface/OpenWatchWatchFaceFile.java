@@ -1,5 +1,6 @@
 package com.openwatchproject.watchface;
 
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
@@ -38,8 +39,8 @@ public class OpenWatchWatchFaceFile implements Closeable {
         this.file = file;
     }
 
-    public OpenWatchWatchFace getWatchFace() {
-        return new OpenWatchFaceDeserializer(this).deserialize();
+    public OpenWatchWatchFace getWatchFace(Resources resources) {
+        return new OpenWatchFaceDeserializer(this, resources).deserialize();
     }
 
     public InputStream getWatchFaceJson() throws IOException {
