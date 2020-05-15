@@ -5,8 +5,8 @@ import android.graphics.drawable.Drawable;
 import java.util.ArrayList;
 
 public class StepsTargetRotatableItem extends RotatableItem {
-    public StepsTargetRotatableItem(int centerX, int centerY, ArrayList<Drawable> frames) {
-        super(centerX, centerY, frames);
+    public StepsTargetRotatableItem(int centerX, int centerY, int direction, ArrayList<Drawable> frames, float angle, int rotationFactor) {
+        super(centerX, centerY, frames, angle, rotationFactor, direction);
     }
 
     @Override

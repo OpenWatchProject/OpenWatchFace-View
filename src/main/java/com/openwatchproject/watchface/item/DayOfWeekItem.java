@@ -2,7 +2,6 @@ package com.openwatchproject.watchface.item;
 
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
-import android.text.format.DateFormat;
 
 import java.util.ArrayList;
 import java.util.Calendar;

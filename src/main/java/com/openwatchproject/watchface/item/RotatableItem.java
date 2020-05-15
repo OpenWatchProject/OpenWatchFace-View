@@ -7,6 +7,8 @@ import java.util.ArrayList;
 
 public abstract class RotatableItem extends AbstractItem {
 
+    float angle;
+
     /**
      * Indicates the factor for which the degrees will be multiplied/divided.
      * A value greater than 0 (rotationFactor > 0) will be multiplied.
@@ -19,12 +21,20 @@ public abstract class RotatableItem extends AbstractItem {
      */
     int rotationFactor;
 
-    public RotatableItem(int centerX, int centerY, ArrayList<Drawable> frames) {
-        super(centerX, centerY, frames);
-    }
+    /**
+     * Indicates the direction for the analog hand.
+     * 0 = Clockwise
+     * 1 = Anti-Clockwise
+     *
+     * Only valid if type == 0!
+     */
+    int direction;
 
-    public void setRotationFactor(int rotationFactor) {
+    public RotatableItem(int centerX, int centerY, ArrayList<Drawable> frames, float angle, int rotationFactor, int direction) {
+        super(centerX, centerY, frames);
+        this.angle = angle;
         this.rotationFactor = rotationFactor;
+        this.direction = direction;
     }
 
     /**

@@ -8,8 +8,14 @@ import com.openwatchproject.watchface.SystemUtils;
 import java.util.ArrayList;
 
 public class BatteryRotatableItem extends RotatableItem {
-    public BatteryRotatableItem(int centerX, int centerY, ArrayList<Drawable> frames) {
-        super(centerX, centerY, frames);
+    private float offsetAngle;
+
+    public BatteryRotatableItem(int centerX, int centerY, int direction, ArrayList<Drawable> frames, float angle, int rotationFactor) {
+        super(centerX, centerY, frames, angle, rotationFactor, direction);
+    }
+
+    public void setOffsetAngle(float offsetAngle) {
+        this.offsetAngle = offsetAngle;
     }
 
     @Override

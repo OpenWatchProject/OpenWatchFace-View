@@ -6,8 +6,6 @@ import android.graphics.drawable.Drawable;
 import java.util.ArrayList;
 
 public class StaticItem extends AbstractItem {
-    private static final String TAG = "StaticItem";
-    
     public StaticItem(int centerX, int centerY, ArrayList<Drawable> frames) {
         super(centerX, centerY, frames);
     }

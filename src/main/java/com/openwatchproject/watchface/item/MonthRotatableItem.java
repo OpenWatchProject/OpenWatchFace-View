@@ -10,8 +10,8 @@ import java.util.Calendar;
 public class MonthRotatableItem extends RotatableItem {
     private final Calendar calendar;
 
-    public MonthRotatableItem(int centerX, int centerY, ArrayList<Drawable> frames, Calendar calendar) {
-        super(centerX, centerY, frames);
+    public MonthRotatableItem(int centerX, int centerY, int direction, ArrayList<Drawable> frames, float angle, int rotationFactor, Calendar calendar) {
+        super(centerX, centerY, frames, angle, rotationFactor, direction);
         this.calendar = calendar;
     }
 

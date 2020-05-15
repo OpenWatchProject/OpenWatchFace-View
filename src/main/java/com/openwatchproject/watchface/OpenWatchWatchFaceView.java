@@ -1,7 +1,9 @@
 package com.openwatchproject.watchface;
 
 import android.annotation.SuppressLint;
+import android.content.ActivityNotFoundException;
 import android.content.BroadcastReceiver;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -9,10 +11,13 @@ import android.graphics.Canvas;
 import android.os.BatteryManager;
 import android.os.SystemClock;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
 import androidx.annotation.Nullable;
+
+import com.openwatchproject.watchface.item.TapActionItem;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -27,10 +32,7 @@ public class OpenWatchWatchFaceView extends View {
     private float lastTouchX;
     private float lastTouchY;
 
-    private Context context;
-    private Calendar calendar;
     private OpenWatchWatchFace watchFace;
-    //private List<ClockSkinItem> touchItems;
 
     private boolean registered;
 
@@ -57,33 +59,21 @@ public class OpenWatchWatchFaceView extends View {
 
     public OpenWatchWatchFaceView(Context context) {
         super(context);
-        constructView(context);
     }
 
     public OpenWatchWatchFaceView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
-        constructView(context);
     }
 
     public OpenWatchWatchFaceView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        constructView(context);
     }
 
     public OpenWatchWatchFaceView(Context context, @Nullable AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
-        constructView(context);
-    }
-
-    private void constructView(Context context) {
-        this.context = context;
-        this.calendar = Calendar.getInstance();
-
-
     }
 
     public void setWatchFace(OpenWatchWatchFace watchFace) {
-        //this.touchItems = new ArrayList<>();
         this.watchFace = watchFace;
     }
 
@@ -97,7 +87,7 @@ public class OpenWatchWatchFaceView extends View {
             IntentFilter intentFilter = new IntentFilter();
             intentFilter.addAction(Intent.ACTION_BATTERY_CHANGED);
             intentFilter.addAction(Intent.ACTION_TIMEZONE_CHANGED);
-            Intent batteryStatus = context.registerReceiver(receiver, intentFilter);
+            Intent batteryStatus = getContext().registerReceiver(receiver, intentFilter);
             updateBatteryStatus(batteryStatus);
         }
     }
@@ -109,7 +99,7 @@ public class OpenWatchWatchFaceView extends View {
         if (registered) {
             registered = false;
 
-            context.unregisterReceiver(receiver);
+            getContext().unregisterReceiver(receiver);
         }
     }
 
@@ -136,30 +126,26 @@ public class OpenWatchWatchFaceView extends View {
         @Override
         public void onClick(View v) {
             if (watchFace != null) {
-                /*List<ClockSkinItem> touchClockSkinItems = clockSkin.getTouchClockSkinItems();
-                if (touchClockSkinItems != null) {
-                    for (ClockSkinItem item : touchClockSkinItems) {
-                        int centerX = viewCenterX + item.getCenterX();
-                        int centerY = viewCenterY + item.getCenterY();
-                        int range = item.getRange();
+                List<TapActionItem> touchClockSkinItems = watchFace.getTapActionItems();
+                for (TapActionItem item : touchClockSkinItems) {
+                    int centerX = viewCenterX + item.getCenterX();
+                    int centerY = viewCenterY + item.getCenterY();
+                    int range = item.getRange();
 
-                        if (distance(lastTouchX, lastTouchY, centerX, centerY) <= range) {
-                            String packageName = item.getPackageName();
-                            String className = item.getClassName();
+                    if (distance(lastTouchX, lastTouchY, centerX, centerY) <= range) {
+                        String packageName = item.getPackageName();
+                        String className = item.getClassName();
 
-                            if (packageName != null && className != null) {
-                                Intent i = new Intent();
-                                i.setComponent(new ComponentName(packageName, className));
-                                try {
-                                    context.startActivity(i);
-                                } catch (ActivityNotFoundException e) {
-                                    Log.d(TAG, "onTouch: tried to open a non-existent activity: packageName = " + packageName + ", className = " + className);
-                                }
-                            }
-                            break;
+                        Intent i = new Intent();
+                        i.setComponent(new ComponentName(packageName, className));
+                        try {
+                            getContext().startActivity(i);
+                        } catch (ActivityNotFoundException e) {
+                            Log.d(TAG, "onTouch: tried to open a non-existent activity: packageName = " + packageName + ", className = " + className);
                         }
+                        break;
                     }
-                }*/
+                }
             }
         }
     };
@@ -186,11 +172,9 @@ public class OpenWatchWatchFaceView extends View {
     }
 
     private void updateTimeZone() {
-        TimeZone timeZone = TimeZone.getDefault();
-        calendar.setTimeZone(timeZone);
-        /*for (ClockSkinItem clockSkinItem : watchFace.getClockSkinItems()) {
-            clockSkinItem.setTimeZone(timeZone);
-        }*/
+        if (watchFace != null) {
+            watchFace.setCalendarTimezone(TimeZone.getDefault());
+        }
     }
 
     private final Runnable ticker = new Runnable() {
