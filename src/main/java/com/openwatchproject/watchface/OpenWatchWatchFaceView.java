@@ -41,7 +41,9 @@ public class OpenWatchWatchFaceView extends View {
     private int viewCenterX;
     private int viewCenterY;
 
-    private boolean shouldRunTicker;
+    private boolean forceStop = false;
+    private boolean shouldRunTicker = false;
+    private int framerate = 60;
 
     private final BroadcastReceiver receiver = new BroadcastReceiver() {
         @Override
@@ -182,7 +184,7 @@ public class OpenWatchWatchFaceView extends View {
             postInvalidateOnAnimation();
 
             long now = SystemClock.uptimeMillis();
-            long next = now + ((1000 / 60) - now % (1000 / 60));
+            long next = now + ((1000 / framerate) - now % (1000 / framerate));
 
             getHandler().postAtTime(ticker, next);
         }
@@ -192,12 +194,14 @@ public class OpenWatchWatchFaceView extends View {
     public void onVisibilityAggregated(boolean isVisible) {
         super.onVisibilityAggregated(isVisible);
 
-        if (!shouldRunTicker && isVisible) {
-            shouldRunTicker = true;
-            ticker.run();
-        } else if (shouldRunTicker && !isVisible) {
-            shouldRunTicker = false;
-            getHandler().removeCallbacks(ticker);
+        if (!forceStop) {
+            if (!shouldRunTicker && isVisible) {
+                shouldRunTicker = true;
+                ticker.run();
+            } else if (shouldRunTicker && !isVisible) {
+                shouldRunTicker = false;
+                getHandler().removeCallbacks(ticker);
+            }
         }
     }
 
@@ -206,6 +210,34 @@ public class OpenWatchWatchFaceView extends View {
         if (watchFace != null) {
             watchFace.setCalendarTime(System.currentTimeMillis());
             watchFace.draw(viewCenterX, viewCenterY, canvas);
+        }
+    }
+
+    public void setFramerate(int framerate) {
+        if (framerate > 60) {
+            framerate = 60;
+        }
+
+        this.framerate = framerate;
+    }
+
+    public void stopTicker() {
+        if (!forceStop) {
+            forceStop = true;
+            if (shouldRunTicker) {
+                shouldRunTicker = false;
+                getHandler().removeCallbacks(ticker);
+            }
+        }
+    }
+
+    public void startTicker() {
+        if (forceStop) {
+            forceStop = false;
+            if (!shouldRunTicker) {
+                shouldRunTicker = true;
+                ticker.run();
+            }
         }
     }
 
