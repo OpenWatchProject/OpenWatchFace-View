@@ -30,8 +30,10 @@ import com.openwatchproject.watchface.item.RotatableItem;
 import com.openwatchproject.watchface.item.SecondItem;
 import com.openwatchproject.watchface.item.SecondRotatableItem;
 import com.openwatchproject.watchface.item.SecondShadowRotatableItem;
+import com.openwatchproject.watchface.item.SpecialSecondItem;
 import com.openwatchproject.watchface.item.StaticItem;
 import com.openwatchproject.watchface.item.TapActionItem;
+import com.openwatchproject.watchface.item.YearItem;
 import com.openwatchproject.watchface.item.YearMonthDayItem;
 
 import java.io.IOException;
@@ -131,8 +133,10 @@ public class OpenWatchFaceDeserializer {
             case OpenWatchWatchFaceConstants.TYPE_BATTERY:
                 break;
             case OpenWatchWatchFaceConstants.TYPE_SPECIAL_SECOND:
+                item = new SpecialSecondItem(centerX, centerY, frames, calendar);
                 break;
             case OpenWatchWatchFaceConstants.TYPE_YEAR:
+                item = new YearItem(centerX, centerY, frames, calendar);
                 break;
             case OpenWatchWatchFaceConstants.TYPE_BATTERY_CIRCLE:
                 break;

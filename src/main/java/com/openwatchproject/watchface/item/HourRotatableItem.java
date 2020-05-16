@@ -1,7 +1,6 @@
 package com.openwatchproject.watchface.item;
 
 import android.graphics.drawable.Drawable;
-import android.util.Log;
 
 import com.openwatchproject.watchface.OpenWatchWatchFaceConstants;
 
@@ -9,7 +8,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 public class HourRotatableItem extends RotatableItem {
-    private static final String TAG = "HourRotatableItem";
     private final Calendar calendar;
 
     public HourRotatableItem(int centerX, int centerY, int direction, ArrayList<Drawable> frames, float angle, int rotationFactor, Calendar calendar) {
