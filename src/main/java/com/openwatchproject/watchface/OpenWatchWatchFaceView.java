@@ -38,6 +38,8 @@ public class OpenWatchWatchFaceView extends View {
 
     private boolean isBatteryCharging;
     private int batteryPercentage;
+    private int viewWidth;
+    private int viewHeight;
     private int viewCenterX;
     private int viewCenterY;
 
@@ -109,6 +111,8 @@ public class OpenWatchWatchFaceView extends View {
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
 
+        this.viewWidth = w;
+        this.viewHeight = h;
         this.viewCenterX = w / 2;
         this.viewCenterY = h / 2;
     }
@@ -207,9 +211,27 @@ public class OpenWatchWatchFaceView extends View {
 
     @Override
     protected void onDraw(Canvas canvas) {
+        draw(viewCenterX, viewCenterY, canvas);
+    }
+
+    public void draw(int viewCenterX, int viewCenterY, Canvas canvas) {
         if (watchFace != null) {
             watchFace.setCalendarTime(System.currentTimeMillis());
+            canvas.save();
+            float watchFaceAspectRatio = ((float) watchFace.getWidth()) / ((float) watchFace.getHeight());
+            float displayAspectRatio = ((float) viewWidth) / ((float) viewHeight);
+            float scaleX;
+            float scaleY;
+            if (displayAspectRatio > watchFaceAspectRatio) {
+                scaleX = ((float) viewHeight) * watchFaceAspectRatio / ((float) watchFace.getWidth());
+                scaleY = ((float) viewHeight) / ((float) watchFace.getHeight());
+            } else {
+                scaleX = ((float) viewWidth) / ((float) watchFace.getWidth());
+                scaleY = ((float) viewWidth) / watchFaceAspectRatio / ((float) watchFace.getHeight());
+            }
+            canvas.scale(scaleX, scaleY, viewCenterX, viewCenterY);
             watchFace.draw(viewCenterX, viewCenterY, canvas);
+            canvas.restore();
         }
     }
 

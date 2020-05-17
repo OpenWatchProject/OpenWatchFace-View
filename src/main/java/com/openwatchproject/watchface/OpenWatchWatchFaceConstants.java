@@ -60,6 +60,9 @@ public class OpenWatchWatchFaceConstants {
     public static final int TYPE_KCAL_NEW = 41;
     public static final int TYPE_STEPS_CIRCLE_NEW = 42;
     public static final int TYPE_BATTERY_CIRCLE_NEW = 43;
+    public static final int TYPE_MISSED_CALLS = 50;
+    public static final int TYPE_MISSED_SMS = 51;
+    public static final int TYPE_MISSED_CALLS_SMS = 55;
     public static final int TYPE_KCAL = 54;
     public static final int TYPE_DISTANCE = 60;
     public static final int TYPE_TEXT_PEDOMETER = 97;

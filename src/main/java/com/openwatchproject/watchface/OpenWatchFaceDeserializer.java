@@ -182,6 +182,12 @@ public class OpenWatchFaceDeserializer {
                 break;
             case OpenWatchWatchFaceConstants.TYPE_BATTERY_CIRCLE_NEW:
                 break;
+            case OpenWatchWatchFaceConstants.TYPE_MISSED_CALLS:
+                break;
+            case OpenWatchWatchFaceConstants.TYPE_MISSED_SMS:
+                break;
+            case OpenWatchWatchFaceConstants.TYPE_MISSED_CALLS_SMS:
+                break;
             case OpenWatchWatchFaceConstants.TYPE_KCAL:
                 break;
             case OpenWatchWatchFaceConstants.TYPE_DISTANCE:
