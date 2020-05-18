@@ -2,10 +2,12 @@ package com.openwatchproject.watchface.item;
 
 import android.graphics.drawable.Drawable;
 
+import com.openwatchproject.watchface.DataRepository;
 import com.openwatchproject.watchface.OpenWatchWatchFaceConstants;
 import com.openwatchproject.watchface.SystemUtils;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class BatteryRotatableItem extends RotatableItem {
     private float offsetAngle;
@@ -19,7 +21,7 @@ public class BatteryRotatableItem extends RotatableItem {
     }
 
     @Override
-    float getAngle() {
+    float getAngle(Calendar calendar, DataRepository dataRepository) {
         int battery = SystemUtils.getBatteryPercentage();
         if (direction == OpenWatchWatchFaceConstants.DIRECTION_REVERSE) {
             battery = -battery;

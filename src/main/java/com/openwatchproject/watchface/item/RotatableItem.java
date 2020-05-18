@@ -3,7 +3,10 @@ package com.openwatchproject.watchface.item;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
 
+import com.openwatchproject.watchface.DataRepository;
+
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public abstract class RotatableItem extends AbstractItem {
 
@@ -39,11 +42,13 @@ public abstract class RotatableItem extends AbstractItem {
 
     /**
      * @return float The angle that the frame should be rotated to
+     * @param calendar
+     * @param dataRepository
      */
-    abstract float getAngle();
+    abstract float getAngle(Calendar calendar, DataRepository dataRepository);
 
     @Override
-    public void draw(int viewCenterX, int viewCenterY, Canvas canvas) {
+    public void draw(int viewCenterX, int viewCenterY, Canvas canvas, Calendar calendar, DataRepository dataRepository) {
         Drawable drawable = getFrame();
         int centerX = viewCenterX + this.centerX;
         int centerY = viewCenterY + this.centerY;
@@ -52,7 +57,7 @@ public abstract class RotatableItem extends AbstractItem {
 
         drawable.setBounds(centerX - halfWidth, centerY - halfHeight, centerX + halfWidth, centerY + halfHeight);
         canvas.save();
-        canvas.rotate(getAngle(), (float) centerX, (float) centerY);
+        canvas.rotate(getAngle(calendar, dataRepository), (float) centerX, (float) centerY);
         drawable.draw(canvas);
         canvas.restore();
     }

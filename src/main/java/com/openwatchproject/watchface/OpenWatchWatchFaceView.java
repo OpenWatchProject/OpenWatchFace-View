@@ -8,7 +8,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Canvas;
-import android.os.BatteryManager;
 import android.os.SystemClock;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -19,7 +18,6 @@ import androidx.annotation.Nullable;
 
 import com.openwatchproject.watchface.item.TapActionItem;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.TimeZone;
@@ -27,22 +25,20 @@ import java.util.TimeZone;
 public class OpenWatchWatchFaceView extends View {
     private static final String TAG = "OpenWatchWatchFaceView";
 
+    private Calendar calendar;
     private DataRepository dataRepository;
-
-    private float lastTouchX;
-    private float lastTouchY;
-
     private OpenWatchWatchFace watchFace;
 
-    private boolean registered;
-
-    private boolean isBatteryCharging;
-    private int batteryPercentage;
     private int viewWidth;
     private int viewHeight;
     private int viewCenterX;
     private int viewCenterY;
+    private float scaleX;
+    private float scaleY;
+    private float lastTouchX;
+    private float lastTouchY;
 
+    private boolean receivedRegistered;
     private boolean forceStop = false;
     private boolean shouldRunTicker = false;
     private int framerate = 60;
@@ -51,9 +47,6 @@ public class OpenWatchWatchFaceView extends View {
         @Override
         public void onReceive(Context context, Intent intent) {
             switch (intent.getAction()) {
-                case Intent.ACTION_BATTERY_CHANGED:
-                    updateBatteryStatus(intent);
-                    break;
                 case Intent.ACTION_TIMEZONE_CHANGED:
                     updateTimeZone();
                     break;
@@ -63,36 +56,45 @@ public class OpenWatchWatchFaceView extends View {
 
     public OpenWatchWatchFaceView(Context context) {
         super(context);
+        init();
     }
 
     public OpenWatchWatchFaceView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
+        init();
     }
 
     public OpenWatchWatchFaceView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        init();
     }
 
     public OpenWatchWatchFaceView(Context context, @Nullable AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
+        init();
+    }
+
+    private void init() {
+        this.calendar = Calendar.getInstance();
+        this.dataRepository = null;
+        this.watchFace = null;
     }
 
     public void setWatchFace(OpenWatchWatchFace watchFace) {
         this.watchFace = watchFace;
+        calculateScale();
     }
 
     @Override
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
 
-        if (!registered) {
-            registered = true;
+        if (!receivedRegistered) {
+            receivedRegistered = true;
 
             IntentFilter intentFilter = new IntentFilter();
-            intentFilter.addAction(Intent.ACTION_BATTERY_CHANGED);
             intentFilter.addAction(Intent.ACTION_TIMEZONE_CHANGED);
-            Intent batteryStatus = getContext().registerReceiver(receiver, intentFilter);
-            updateBatteryStatus(batteryStatus);
+            getContext().registerReceiver(receiver, intentFilter);
         }
     }
 
@@ -100,10 +102,10 @@ public class OpenWatchWatchFaceView extends View {
     protected void onDetachedFromWindow() {
         super.onDetachedFromWindow();
 
-        if (registered) {
-            registered = false;
-
+        if (receivedRegistered) {
             getContext().unregisterReceiver(receiver);
+
+            receivedRegistered = false;
         }
     }
 
@@ -115,6 +117,22 @@ public class OpenWatchWatchFaceView extends View {
         this.viewHeight = h;
         this.viewCenterX = w / 2;
         this.viewCenterY = h / 2;
+
+        calculateScale();
+    }
+
+    private void calculateScale() {
+        if (watchFace != null) {
+            float watchFaceAspectRatio = ((float) watchFace.getWidth()) / ((float) watchFace.getHeight());
+            float displayAspectRatio = ((float) viewWidth) / ((float) viewHeight);
+            if (displayAspectRatio > watchFaceAspectRatio) {
+                scaleX = ((float) viewHeight) * watchFaceAspectRatio / ((float) watchFace.getWidth());
+                scaleY = ((float) viewHeight) / ((float) watchFace.getHeight());
+            } else {
+                scaleX = ((float) viewWidth) / ((float) watchFace.getWidth());
+                scaleY = ((float) viewWidth) / watchFaceAspectRatio / ((float) watchFace.getHeight());
+            }
+        }
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -167,20 +185,8 @@ public class OpenWatchWatchFaceView extends View {
         return (int) Math.round(Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2)));
     }
 
-    private void updateBatteryStatus(Intent batteryStatus) {
-        int status = batteryStatus.getIntExtra(BatteryManager.EXTRA_STATUS, -1);
-        this.isBatteryCharging = status == BatteryManager.BATTERY_STATUS_CHARGING ||
-                status == BatteryManager.BATTERY_STATUS_FULL;
-
-        int level = batteryStatus.getIntExtra(BatteryManager.EXTRA_LEVEL, -1);
-        int scale = batteryStatus.getIntExtra(BatteryManager.EXTRA_SCALE, -1);
-        this.batteryPercentage =  Math.round((float) (level * 100) / (float) scale);
-    }
-
     private void updateTimeZone() {
-        if (watchFace != null) {
-            watchFace.setCalendarTimezone(TimeZone.getDefault());
-        }
+        calendar.setTimeZone(TimeZone.getDefault());
     }
 
     private final Runnable ticker = new Runnable() {
@@ -211,27 +217,16 @@ public class OpenWatchWatchFaceView extends View {
 
     @Override
     protected void onDraw(Canvas canvas) {
+        canvas.save();
+        canvas.scale(scaleX, scaleY, viewCenterX, viewCenterY);
         draw(viewCenterX, viewCenterY, canvas);
+        canvas.restore();
     }
 
     public void draw(int viewCenterX, int viewCenterY, Canvas canvas) {
         if (watchFace != null) {
-            watchFace.setCalendarTime(System.currentTimeMillis());
-            canvas.save();
-            float watchFaceAspectRatio = ((float) watchFace.getWidth()) / ((float) watchFace.getHeight());
-            float displayAspectRatio = ((float) viewWidth) / ((float) viewHeight);
-            float scaleX;
-            float scaleY;
-            if (displayAspectRatio > watchFaceAspectRatio) {
-                scaleX = ((float) viewHeight) * watchFaceAspectRatio / ((float) watchFace.getWidth());
-                scaleY = ((float) viewHeight) / ((float) watchFace.getHeight());
-            } else {
-                scaleX = ((float) viewWidth) / ((float) watchFace.getWidth());
-                scaleY = ((float) viewWidth) / watchFaceAspectRatio / ((float) watchFace.getHeight());
-            }
-            canvas.scale(scaleX, scaleY, viewCenterX, viewCenterY);
-            watchFace.draw(viewCenterX, viewCenterY, canvas);
-            canvas.restore();
+            calendar.setTimeInMillis(System.currentTimeMillis());
+            watchFace.draw(viewCenterX, viewCenterY, canvas, calendar, dataRepository);
         }
     }
 
@@ -261,14 +256,6 @@ public class OpenWatchWatchFaceView extends View {
                 ticker.run();
             }
         }
-    }
-
-    public interface DataRepository {
-        int getWeatherIcon();
-        int getSteps();
-        int getTargetSteps();
-        int getWeatherTemp();
-        int getHeartRate();
     }
 
     public void setDataRepository(DataRepository dataRepository) {

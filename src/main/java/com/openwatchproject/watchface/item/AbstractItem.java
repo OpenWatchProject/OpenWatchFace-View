@@ -4,7 +4,10 @@ import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
 import android.util.Log;
 
+import com.openwatchproject.watchface.DataRepository;
+
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public abstract class AbstractItem {
@@ -61,5 +64,5 @@ public abstract class AbstractItem {
         return frames;
     }
 
-    public abstract void draw(int viewCenterX, int viewCenterY, Canvas canvas);
+    public abstract void draw(int viewCenterX, int viewCenterY, Canvas canvas, Calendar calendar, DataRepository dataRepository);
 }

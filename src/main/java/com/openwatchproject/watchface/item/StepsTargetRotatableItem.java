@@ -2,7 +2,10 @@ package com.openwatchproject.watchface.item;
 
 import android.graphics.drawable.Drawable;
 
+import com.openwatchproject.watchface.DataRepository;
+
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class StepsTargetRotatableItem extends RotatableItem {
     public StepsTargetRotatableItem(int centerX, int centerY, int direction, ArrayList<Drawable> frames, float angle, int rotationFactor) {
@@ -10,7 +13,7 @@ public class StepsTargetRotatableItem extends RotatableItem {
     }
 
     @Override
-    float getAngle() {
+    float getAngle(Calendar calendar, DataRepository dataRepository) {
         /*if (dataRepository == null) break;
         int steps = dataRepository.getSteps();
         int targetSteps = dataRepository.getTargetSteps();

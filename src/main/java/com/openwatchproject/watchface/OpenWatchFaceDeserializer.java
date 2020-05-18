@@ -85,7 +85,6 @@ public class OpenWatchFaceDeserializer {
         int centerX = json.get("centerX").getAsInt();
         int centerY = json.get("centerY").getAsInt();
         ArrayList<Drawable> frames = parseFrames(json);
-        Calendar calendar = watchFace.getCalendar();
 
         switch (type) {
             case OpenWatchWatchFaceConstants.TYPE_STATIC:
@@ -96,31 +95,31 @@ public class OpenWatchFaceDeserializer {
                 item = parseRotatableItem(centerX, centerY, frames, json);
                 break;
             case OpenWatchWatchFaceConstants.TYPE_YEAR_MONTH_DAY:
-                item = new YearMonthDayItem(centerX, centerY, frames, calendar);
+                item = new YearMonthDayItem(centerX, centerY, frames);
                 break;
             case OpenWatchWatchFaceConstants.TYPE_MONTH_DAY:
-                item = new MonthDayItem(centerX, centerY, frames, calendar);
+                item = new MonthDayItem(centerX, centerY, frames);
                 break;
             case OpenWatchWatchFaceConstants.TYPE_MONTH:
-                item = new MonthItem(centerX, centerY, frames, calendar);
+                item = new MonthItem(centerX, centerY, frames);
                 break;
             case OpenWatchWatchFaceConstants.TYPE_DAY:
-                item = new DayItem(centerX, centerY, frames, calendar);
+                item = new DayItem(centerX, centerY, frames);
                 break;
             case OpenWatchWatchFaceConstants.TYPE_WEEKDAY:
-                item = new DayOfWeekItem(centerX, centerY, frames, calendar);
+                item = new DayOfWeekItem(centerX, centerY, frames);
                 break;
             case OpenWatchWatchFaceConstants.TYPE_HOUR_MINUTE:
-                item = new HourMinuteItem(centerX, centerY, frames, calendar);
+                item = new HourMinuteItem(centerX, centerY, frames);
                 break;
             case OpenWatchWatchFaceConstants.TYPE_HOUR:
-                item = new HourItem(centerX, centerY, frames, calendar);
+                item = new HourItem(centerX, centerY, frames);
                 break;
             case OpenWatchWatchFaceConstants.TYPE_MINUTE:
-                item = new MinuteItem(centerX, centerY, frames, calendar);
+                item = new MinuteItem(centerX, centerY, frames);
                 break;
             case OpenWatchWatchFaceConstants.TYPE_SECOND:
-                item = new SecondItem(centerX, centerY, frames, calendar);
+                item = new SecondItem(centerX, centerY, frames);
                 break;
             case OpenWatchWatchFaceConstants.TYPE_WEATHER:
                 break;
@@ -133,10 +132,10 @@ public class OpenWatchFaceDeserializer {
             case OpenWatchWatchFaceConstants.TYPE_BATTERY:
                 break;
             case OpenWatchWatchFaceConstants.TYPE_SPECIAL_SECOND:
-                item = new SpecialSecondItem(centerX, centerY, frames, calendar);
+                item = new SpecialSecondItem(centerX, centerY, frames);
                 break;
             case OpenWatchWatchFaceConstants.TYPE_YEAR:
-                item = new YearItem(centerX, centerY, frames, calendar);
+                item = new YearItem(centerX, centerY, frames);
                 break;
             case OpenWatchWatchFaceConstants.TYPE_BATTERY_CIRCLE:
                 break;
@@ -248,44 +247,43 @@ public class OpenWatchFaceDeserializer {
         float angle = json.get("angle").getAsFloat();
         int rotationFactor = json.get("rotationFactor").getAsInt();
         int direction = json.get("direction").getAsInt();
-        Calendar calendar = watchFace.getCalendar();
 
         switch (rotatableType) {
             case OpenWatchWatchFaceConstants.ROTATABLE_HOUR:
-                item = new HourRotatableItem(centerX, centerY, direction, frames, angle, rotationFactor, calendar);
+                item = new HourRotatableItem(centerX, centerY, direction, frames, angle, rotationFactor);
                 break;
             case OpenWatchWatchFaceConstants.ROTATABLE_MINUTE:
-                item = new MinuteRotatableItem(centerX, centerY, direction, frames, angle, rotationFactor, calendar);
+                item = new MinuteRotatableItem(centerX, centerY, direction, frames, angle, rotationFactor);
                 break;
             case OpenWatchWatchFaceConstants.ROTATABLE_SECOND:
-                item = new SecondRotatableItem(centerX, centerY, direction, frames, angle, rotationFactor, calendar);
+                item = new SecondRotatableItem(centerX, centerY, direction, frames, angle, rotationFactor);
                 break;
             case OpenWatchWatchFaceConstants.ROTATABLE_MONTH:
-                item = new MonthRotatableItem(centerX, centerY, direction, frames, angle, rotationFactor, calendar);
+                item = new MonthRotatableItem(centerX, centerY, direction, frames, angle, rotationFactor);
                 break;
             case OpenWatchWatchFaceConstants.ROTATABLE_DAY_OF_WEEK:
-                item = new DayOfWeekRotatableItem(centerX, centerY, direction, frames, angle, rotationFactor, calendar);
+                item = new DayOfWeekRotatableItem(centerX, centerY, direction, frames, angle, rotationFactor);
                 break;
             case OpenWatchWatchFaceConstants.ROTATABLE_BATTERY:
                 item = new BatteryRotatableItem(centerX, centerY, direction, frames, angle, rotationFactor);
                 break;
             case OpenWatchWatchFaceConstants.ROTATABLE_DAY_NIGHT:
-                item = new DayNightRotatableItem(centerX, centerY, direction, frames, angle, rotationFactor, calendar);
+                item = new DayNightRotatableItem(centerX, centerY, direction, frames, angle, rotationFactor);
                 break;
             case OpenWatchWatchFaceConstants.ROTATABLE_HOUR_SHADOW:
-                item = new HourShadowRotatableItem(centerX, centerY, direction, frames, angle, rotationFactor, calendar);
+                item = new HourShadowRotatableItem(centerX, centerY, direction, frames, angle, rotationFactor);
                 break;
             case OpenWatchWatchFaceConstants.ROTATABLE_MINUTE_SHADOW:
-                item = new MinuteShadowRotatableItem(centerX, centerY, direction, frames, angle, rotationFactor, calendar);
+                item = new MinuteShadowRotatableItem(centerX, centerY, direction, frames, angle, rotationFactor);
                 break;
             case OpenWatchWatchFaceConstants.ROTATABLE_SECOND_SHADOW:
-                item = new SecondShadowRotatableItem(centerX, centerY, direction, frames, angle, rotationFactor, calendar);
+                item = new SecondShadowRotatableItem(centerX, centerY, direction, frames, angle, rotationFactor);
                 break;
             case OpenWatchWatchFaceConstants.ROTATABLE_BATTERY_CIRCLE:
 
                 break;
             case OpenWatchWatchFaceConstants.ROTATABLE_DAY:
-                item = new DayRotatableItem(centerX, centerY, direction, frames, angle, rotationFactor, calendar);
+                item = new DayRotatableItem(centerX, centerY, direction, frames, angle, rotationFactor);
                 break;
             case OpenWatchWatchFaceConstants.ROTATABLE_STEPS_TARGET:
 
