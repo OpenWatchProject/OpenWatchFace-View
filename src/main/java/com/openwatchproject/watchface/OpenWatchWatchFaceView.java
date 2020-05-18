@@ -46,10 +46,8 @@ public class OpenWatchWatchFaceView extends View {
     private final BroadcastReceiver receiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            switch (intent.getAction()) {
-                case Intent.ACTION_TIMEZONE_CHANGED:
-                    updateTimeZone();
-                    break;
+            if (Intent.ACTION_TIMEZONE_CHANGED.equals(intent.getAction())) {
+                updateTimeZone();
             }
         }
     };
@@ -103,9 +101,9 @@ public class OpenWatchWatchFaceView extends View {
         super.onDetachedFromWindow();
 
         if (receivedRegistered) {
-            getContext().unregisterReceiver(receiver);
-
             receivedRegistered = false;
+
+            getContext().unregisterReceiver(receiver);
         }
     }
 
@@ -150,39 +148,13 @@ public class OpenWatchWatchFaceView extends View {
         @Override
         public void onClick(View v) {
             if (watchFace != null) {
-                List<TapActionItem> touchClockSkinItems = watchFace.getTapActionItems();
-                for (TapActionItem item : touchClockSkinItems) {
-                    int centerX = viewCenterX + item.getCenterX();
-                    int centerY = viewCenterY + item.getCenterY();
-                    int range = item.getRange();
-
-                    if (distance(lastTouchX, lastTouchY, centerX, centerY) <= range) {
-                        String packageName = item.getPackageName();
-                        String className = item.getClassName();
-
-                        Intent i = new Intent();
-                        i.setComponent(new ComponentName(packageName, className));
-                        try {
-                            getContext().startActivity(i);
-                        } catch (ActivityNotFoundException e) {
-                            Log.d(TAG, "onTouch: tried to open a non-existent activity: packageName = " + packageName + ", className = " + className);
-                        }
-                        break;
-                    }
-                }
+                watchFace.onTapAction(viewCenterX, viewCenterY, lastTouchX, lastTouchY, getContext());
             }
         }
     };
 
     public OpenWatchWatchFace getWatchFace() {
         return watchFace;
-    }
-
-    private int distance(float x1, float y1, float x2, float y2) {
-        float x = x2 - x1;
-        float y = y2 - y1;
-
-        return (int) Math.round(Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2)));
     }
 
     private void updateTimeZone() {

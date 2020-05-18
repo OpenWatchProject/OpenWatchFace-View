@@ -1,5 +1,6 @@
 package com.openwatchproject.watchface;
 
+import android.content.Context;
 import android.graphics.Canvas;
 
 import com.openwatchproject.watchface.item.AbstractItem;
@@ -7,7 +8,6 @@ import com.openwatchproject.watchface.item.TapActionItem;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.TimeZone;
 
 public class OpenWatchWatchFace {
     /**
@@ -35,43 +35,45 @@ public class OpenWatchWatchFace {
      */
     private ArrayList<TapActionItem> tapActionItems;
 
-    public OpenWatchWatchFace() {
-        this.width = 400;
-        this.height = 400;
+    private String absolutePath;
+
+    public OpenWatchWatchFace(int width, int height) {
+        this.width = width;
+        this.height = height;
         this.items = new ArrayList<>();
         this.tapActionItems = new ArrayList<>();
-    }
-
-    public void setWidth(int width) {
-        this.width = width;
     }
 
     public int getWidth() {
         return width;
     }
 
-    public void setHeight(int height) {
-        this.height = height;
-    }
-
     public int getHeight() {
         return height;
+    }
+
+    public void setAbsolutePath(String absolutePath) {
+        this.absolutePath = absolutePath;
+    }
+
+    public String getAbsolutePath() {
+        return absolutePath;
     }
 
     public void addItem(AbstractItem item) {
         items.add(item);
     }
 
-    public ArrayList<AbstractItem> getItems() {
-        return items;
-    }
-
     public void addTapActionItem(TapActionItem item) {
         tapActionItems.add(item);
     }
 
-    public ArrayList<TapActionItem> getTapActionItems() {
-        return tapActionItems;
+    public void onTapAction(int viewCenterX, int viewCenterY, float touchX, float touchY, Context context) {
+        for (TapActionItem item : tapActionItems) {
+            if (item.onTapAction(viewCenterX, viewCenterY, touchX, touchY, context)) {
+                break;
+            }
+        }
     }
 
     public void draw(int viewCenterX, int viewCenterY, Canvas canvas, Calendar calendar, DataRepository dataRepository) {

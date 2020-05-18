@@ -40,7 +40,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.Calendar;
 
 public class OpenWatchFaceDeserializer {
     private final OpenWatchWatchFaceFile watchFaceFile;
@@ -60,9 +59,8 @@ public class OpenWatchFaceDeserializer {
             return null;
         }
 
-        watchFace = new OpenWatchWatchFace();
-        watchFace.setWidth(json.get("width").getAsInt());
-        watchFace.setHeight(json.get("height").getAsInt());
+        watchFace = new OpenWatchWatchFace(json.get("width").getAsInt(), json.get("height").getAsInt());
+        watchFace.setAbsolutePath(watchFaceFile.getFile().getAbsolutePath());
 
         JsonArray items = json.get("items").getAsJsonArray();
         for (JsonElement itemElement : items) {
