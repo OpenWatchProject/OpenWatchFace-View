@@ -15,7 +15,6 @@ import com.openwatchproject.watchface.item.DayItem;
 import com.openwatchproject.watchface.item.DayNightRotatableItem;
 import com.openwatchproject.watchface.item.DayOfWeekItem;
 import com.openwatchproject.watchface.item.DayOfWeekRotatableItem;
-import com.openwatchproject.watchface.item.DayRotatableItem;
 import com.openwatchproject.watchface.item.HourItem;
 import com.openwatchproject.watchface.item.HourMinuteItem;
 import com.openwatchproject.watchface.item.HourRotatableItem;
@@ -135,49 +134,13 @@ public class OpenWatchFaceDeserializer {
             case OpenWatchWatchFaceConstants.TYPE_YEAR:
                 item = new YearItem(centerX, centerY, frames);
                 break;
-            case OpenWatchWatchFaceConstants.TYPE_BATTERY_CIRCLE:
+            case OpenWatchWatchFaceConstants.TYPE_BATTERY_PICTURE_CIRCLE:
                 break;
-            case OpenWatchWatchFaceConstants.TYPE_STEPS_CIRCLE:
+            case OpenWatchWatchFaceConstants.TYPE_STEPS_PICTURE_CIRCLE:
                 break;
             case OpenWatchWatchFaceConstants.TYPE_MOON_PHASE:
                 break;
-            case OpenWatchWatchFaceConstants.TYPE_AM_PM:
-                break;
-            case OpenWatchWatchFaceConstants.TYPE_FRAME_ANIMATION:
-                break;
-            case OpenWatchWatchFaceConstants.TYPE_ROTATE_ANIMATION:
-                break;
-            case OpenWatchWatchFaceConstants.TYPE_SNOW_ANIMATION:
-                break;
-            case OpenWatchWatchFaceConstants.TYPE_BATTERY_CIRCLE_PIC:
-                break;
-            case OpenWatchWatchFaceConstants.TYPE_PICTURE_HOUR:
-                break;
-            case OpenWatchWatchFaceConstants.TYPE_PICTURE_MINUTER:
-                break;
-            case OpenWatchWatchFaceConstants.TYPE_PICTURE_SECOND:
-                break;
-            case OpenWatchWatchFaceConstants.TYPE_PICTURE_HOUR_DIGITE:
-                break;
-            case OpenWatchWatchFaceConstants.TYPE_VALUE_WITH_PROGRESS:
-                break;
-            case OpenWatchWatchFaceConstants.TYPE_VALUE_STRING:
-                break;
-            case OpenWatchWatchFaceConstants.TYPE_VALUE_WITH_CLIP_PICTURE:
-                break;
-            case OpenWatchWatchFaceConstants.TYPE_MONTH_NEW:
-                break;
-            case OpenWatchWatchFaceConstants.TYPE_DAY_NEW:
-                break;
-            case OpenWatchWatchFaceConstants.TYPE_SECOND_NEW:
-                break;
-            case OpenWatchWatchFaceConstants.TYPE_STEPS_NEW:
-                break;
-            case OpenWatchWatchFaceConstants.TYPE_KCAL_NEW:
-                break;
-            case OpenWatchWatchFaceConstants.TYPE_STEPS_CIRCLE_NEW:
-                break;
-            case OpenWatchWatchFaceConstants.TYPE_BATTERY_CIRCLE_NEW:
+            case OpenWatchWatchFaceConstants.TYPE_YEAR_2:
                 break;
             case OpenWatchWatchFaceConstants.TYPE_MISSED_CALLS:
                 break;
@@ -200,12 +163,6 @@ public class OpenWatchFaceDeserializer {
                 parseTapActionItem((TapActionItem) item, json);
                 break;
             case OpenWatchWatchFaceConstants.TYPE_YEAR_MONTH_DAY_2:
-                break;
-            case OpenWatchWatchFaceConstants.TYPE_DISTANCE_2:
-                break;
-            case OpenWatchWatchFaceConstants.TYPE_DISTANCE_UNIT:
-                break;
-            case OpenWatchWatchFaceConstants.TYPE_TEMP_UNIT:
                 break;
         }
 
@@ -259,13 +216,13 @@ public class OpenWatchFaceDeserializer {
             case OpenWatchWatchFaceConstants.ROTATABLE_MONTH:
                 item = new MonthRotatableItem(centerX, centerY, direction, frames, angle, rotationFactor);
                 break;
-            case OpenWatchWatchFaceConstants.ROTATABLE_DAY_OF_WEEK:
+            case OpenWatchWatchFaceConstants.ROTATABLE_WEEKDAY:
                 item = new DayOfWeekRotatableItem(centerX, centerY, direction, frames, angle, rotationFactor);
                 break;
-            case OpenWatchWatchFaceConstants.ROTATABLE_BATTERY:
+            case OpenWatchWatchFaceConstants.ROTATABLE_BATTERY_180_ANGLE:
                 item = new BatteryRotatableItem(centerX, centerY, direction, frames, angle, rotationFactor);
                 break;
-            case OpenWatchWatchFaceConstants.ROTATABLE_DAY_NIGHT:
+            case OpenWatchWatchFaceConstants.ROTATABLE_24_HOURS:
                 item = new DayNightRotatableItem(centerX, centerY, direction, frames, angle, rotationFactor);
                 break;
             case OpenWatchWatchFaceConstants.ROTATABLE_HOUR_SHADOW:
@@ -277,13 +234,7 @@ public class OpenWatchFaceDeserializer {
             case OpenWatchWatchFaceConstants.ROTATABLE_SECOND_SHADOW:
                 item = new SecondShadowRotatableItem(centerX, centerY, direction, frames, angle, rotationFactor);
                 break;
-            case OpenWatchWatchFaceConstants.ROTATABLE_BATTERY_CIRCLE:
-
-                break;
             case OpenWatchWatchFaceConstants.ROTATABLE_DAY:
-                item = new DayRotatableItem(centerX, centerY, direction, frames, angle, rotationFactor);
-                break;
-            case OpenWatchWatchFaceConstants.ROTATABLE_STEPS_TARGET:
 
                 break;
         }
