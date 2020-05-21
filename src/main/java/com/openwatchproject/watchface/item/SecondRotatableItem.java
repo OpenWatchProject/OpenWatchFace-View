@@ -16,16 +16,15 @@ public class SecondRotatableItem extends RotatableItem {
     @Override
     float getAngle(Calendar calendar, DataRepository dataRepository) {
         float secondAngle;
-        float analogSecond = (float) calendar.get(Calendar.SECOND) + ((float) calendar.get(Calendar.MILLISECOND) / (float) 1000);
-        if (rotationFactor > 0) {
-            //analogSecond *= mulRotate;
-        } else if (rotationFactor < 0) {
-            //analogSecond /= (float) mulRotate;
+        float analogSecond = (float) calendar.get(Calendar.SECOND)
+                + ((float) calendar.get(Calendar.MILLISECOND) / (float) 1000);
+
+        if (direction == OpenWatchWatchFaceConstants.DIRECTION_NORMAL) {
+            secondAngle = angle + ((analogSecond / 60.0f) * 360.0f * ((float) rotationFactor));
+        } else {
+            secondAngle = angle - ((analogSecond / 60.0f) * 360.0f * ((float) rotationFactor));
         }
-        if (direction == OpenWatchWatchFaceConstants.DIRECTION_REVERSE) {
-            analogSecond = -analogSecond;
-        }
-        secondAngle = angle + (rotationFactor * ((float) analogSecond / (float) 60 * 360));
+
         return secondAngle;
     }
 }

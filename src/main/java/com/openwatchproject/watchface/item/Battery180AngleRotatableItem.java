@@ -9,29 +9,27 @@ import com.openwatchproject.watchface.SystemUtils;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-public class BatteryRotatableItem extends RotatableItem {
-    private float offsetAngle;
-
-    public BatteryRotatableItem(int centerX, int centerY, int direction, ArrayList<Drawable> frames, float angle, int rotationFactor) {
+public class Battery180AngleRotatableItem extends RotatableItem {
+    public Battery180AngleRotatableItem(int centerX, int centerY, int direction, ArrayList<Drawable> frames, float angle, int rotationFactor) {
         super(centerX, centerY, frames, angle, rotationFactor, direction);
-    }
-
-    public void setOffsetAngle(float offsetAngle) {
-        this.offsetAngle = offsetAngle;
     }
 
     @Override
     float getAngle(Calendar calendar, DataRepository dataRepository) {
-        int battery = SystemUtils.getBatteryPercentage();
-        if (direction == OpenWatchWatchFaceConstants.DIRECTION_REVERSE) {
-            battery = -battery;
-        }
         float batteryAngle;
-        if (rotationFactor < 0) {
-            batteryAngle = ((((float) battery) / 100.0f) * 180.0f / ((float) - rotationFactor)) + offsetAngle;
-        } else {
-            batteryAngle = ((((float) battery) / 100.0f) * 180.0f * ((float) rotationFactor)) + offsetAngle;
+        int analogBattery = SystemUtils.getBatteryPercentage();
+
+        batteryAngle = (((float) analogBattery) / 100.0f) * 180.0f;
+        if (direction == OpenWatchWatchFaceConstants.DIRECTION_REVERSE) {
+            batteryAngle = -batteryAngle;
         }
+
+        if (rotationFactor < 0) {
+            batteryAngle = angle + (batteryAngle / ((float) -rotationFactor));
+        } else {
+            batteryAngle = angle + (batteryAngle * ((float) rotationFactor));
+        }
+
         return batteryAngle;
     }
 }

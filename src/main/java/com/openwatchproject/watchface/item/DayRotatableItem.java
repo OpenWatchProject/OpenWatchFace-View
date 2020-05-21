@@ -15,11 +15,15 @@ public class DayRotatableItem extends RotatableItem {
 
     @Override
     float getAngle(Calendar calendar, DataRepository dataRepository) {
+        float dayAngle;
         int day = calendar.get(Calendar.DAY_OF_MONTH);
-        if (direction == OpenWatchWatchFaceConstants.DIRECTION_REVERSE) {
-            day = -day;
+
+        if (direction == OpenWatchWatchFaceConstants.DIRECTION_NORMAL) {
+            dayAngle = angle + ((((float) day) / 31.0f) * 360.0f);
+        } else {
+            dayAngle = angle - ((((float) day) / 31.0f) * 360.0f);
         }
-        float dayAngle = angle + (rotationFactor * ((float) day / (float) 31 * 360));
+
         return dayAngle;
     }
 }

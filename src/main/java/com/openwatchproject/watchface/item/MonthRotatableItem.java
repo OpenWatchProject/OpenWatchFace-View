@@ -15,11 +15,15 @@ public class MonthRotatableItem extends RotatableItem {
 
     @Override
     float getAngle(Calendar calendar, DataRepository dataRepository) {
+        float monthAngle;
         int month = calendar.get(Calendar.MONTH) + 1; // Calendar.MONTH starts at 0
-        if (direction == OpenWatchWatchFaceConstants.DIRECTION_REVERSE) {
-            month = -month;
+
+        if (direction == OpenWatchWatchFaceConstants.DIRECTION_NORMAL) {
+            monthAngle = angle + ((((float) month) / 12.0f) * 360.0f * ((float) rotationFactor));
+        } else {
+            monthAngle = angle - ((((float) month) / 12.0f) * 360.0f * ((float) rotationFactor));
         }
-        float monthAngle = angle + (rotationFactor * ((float) month / (float) 12 * 360));
+
         return monthAngle;
     }
 }
