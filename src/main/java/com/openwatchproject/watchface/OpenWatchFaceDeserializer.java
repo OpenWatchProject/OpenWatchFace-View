@@ -16,6 +16,7 @@ import com.openwatchproject.watchface.item.Battery180AngleRotatableItem;
 import com.openwatchproject.watchface.item.BatteryCustomAngleRotatableItem;
 import com.openwatchproject.watchface.item.DayItem;
 import com.openwatchproject.watchface.item.DayRotatableItem;
+import com.openwatchproject.watchface.item.MoonPhaseItem;
 import com.openwatchproject.watchface.item.TwentyFourHoursRotatableItem;
 import com.openwatchproject.watchface.item.DayOfWeekItem;
 import com.openwatchproject.watchface.item.WeatherItem;
@@ -146,6 +147,7 @@ public class OpenWatchFaceDeserializer {
             case OpenWatchWatchFaceConstants.TYPE_STEPS_PICTURE_CIRCLE:
                 break;
             case OpenWatchWatchFaceConstants.TYPE_MOON_PHASE:
+                item = new MoonPhaseItem(centerX, centerY, frames);
                 break;
             case OpenWatchWatchFaceConstants.TYPE_YEAR_2:
                 break;
