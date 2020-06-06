@@ -10,11 +10,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 public class WeatherItem extends AbstractItem {
-    private final Calendar calendar;
-
-    public WeatherItem(int centerX, int centerY, ArrayList<Drawable> frames, Calendar calendar) {
+    public WeatherItem(int centerX, int centerY, ArrayList<Drawable> frames) {
         super(centerX, centerY, frames);
-        this.calendar = calendar;
     }
 
     @Override

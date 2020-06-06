@@ -4,6 +4,7 @@ import android.content.res.Resources;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.util.Log;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -17,6 +18,7 @@ import com.openwatchproject.watchface.item.DayItem;
 import com.openwatchproject.watchface.item.DayRotatableItem;
 import com.openwatchproject.watchface.item.TwentyFourHoursRotatableItem;
 import com.openwatchproject.watchface.item.DayOfWeekItem;
+import com.openwatchproject.watchface.item.WeatherItem;
 import com.openwatchproject.watchface.item.WeekdayRotatableItem;
 import com.openwatchproject.watchface.item.HourItem;
 import com.openwatchproject.watchface.item.HourMinuteItem;
@@ -122,8 +124,10 @@ public class OpenWatchFaceDeserializer {
                 item = new SecondItem(centerX, centerY, frames);
                 break;
             case OpenWatchWatchFaceConstants.TYPE_WEATHER:
+                item = new WeatherItem(centerX, centerY, frames);
                 break;
             case OpenWatchWatchFaceConstants.TYPE_TEMPERATURE:
+
                 break;
             case OpenWatchWatchFaceConstants.TYPE_STEPS:
                 break;
@@ -182,6 +186,7 @@ public class OpenWatchFaceDeserializer {
             case OpenWatchWatchFaceConstants.TYPE_TAP_ACTION:
                 item = new TapActionItem(centerX, centerY, frames);
                 parseTapActionItem((TapActionItem) item, json);
+                Log.d("OpenWatchFaceDeserial", "parseItem: touch parsed");
                 break;
             case OpenWatchWatchFaceConstants.TYPE_YEAR_MONTH_DAY_2:
                 break;

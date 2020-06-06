@@ -2,6 +2,7 @@ package com.openwatchproject.watchface;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.util.Log;
 
 import com.openwatchproject.watchface.item.AbstractItem;
 import com.openwatchproject.watchface.item.TapActionItem;
@@ -70,15 +71,16 @@ public class OpenWatchWatchFace {
 
     public void onTapAction(int viewCenterX, int viewCenterY, float touchX, float touchY, Context context) {
         for (TapActionItem item : tapActionItems) {
-            if (item.onTapAction(viewCenterX, viewCenterY, touchX, touchY, context)) {
+            if (item.onTapAction(viewCenterX, viewCenterY, touchX, touchY, context))
                 break;
-            }
         }
     }
 
     public void draw(int viewCenterX, int viewCenterY, Canvas canvas, Calendar calendar, DataRepository dataRepository) {
         for (AbstractItem i : items) {
-            i.draw(viewCenterX, viewCenterY, canvas, calendar, dataRepository);
+            if (i.isDrawable()) {
+                i.draw(viewCenterX, viewCenterY, canvas, calendar, dataRepository);
+            }
         }
     }
 }

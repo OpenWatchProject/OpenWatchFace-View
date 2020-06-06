@@ -147,9 +147,8 @@ public class OpenWatchWatchFaceView extends View {
     public final OnClickListener onClickListener = new OnClickListener() {
         @Override
         public void onClick(View v) {
-            if (watchFace != null) {
+            if (watchFace != null)
                 watchFace.onTapAction(viewCenterX, viewCenterY, lastTouchX, lastTouchY, getContext());
-            }
         }
     };
 

@@ -60,6 +60,10 @@ public abstract class AbstractItem {
         return frames.get(0);
     }
 
+    public boolean isDrawable() {
+        return frames.size() > 0;
+    }
+
     public ArrayList<Drawable> getFrames() {
         return frames;
     }
