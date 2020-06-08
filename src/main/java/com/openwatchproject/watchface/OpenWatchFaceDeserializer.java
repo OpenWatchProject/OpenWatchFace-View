@@ -128,7 +128,6 @@ public class OpenWatchFaceDeserializer {
                 item = new WeatherItem(centerX, centerY, frames);
                 break;
             case OpenWatchWatchFaceConstants.TYPE_TEMPERATURE:
-
                 break;
             case OpenWatchWatchFaceConstants.TYPE_STEPS:
                 break;
