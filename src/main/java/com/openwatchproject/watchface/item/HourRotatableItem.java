@@ -17,8 +17,8 @@ public class HourRotatableItem extends RotatableItem {
     float getAngle(Calendar calendar, DataRepository dataRepository) {
         float hourAngle;
         float analogHour = (float) calendar.get(Calendar.HOUR)
-                + ((float) calendar.get(Calendar.MINUTE) / (float) 60)
-                + ((float) calendar.get(Calendar.SECOND) / (float) 60 / (float) 60);
+                + ((float) calendar.get(Calendar.MINUTE) / 60.0f)
+                + ((float) calendar.get(Calendar.SECOND) / 60.0f / 60.0f);
 
         if (direction == OpenWatchWatchFaceConstants.DIRECTION_NORMAL) {
             hourAngle = this.angle + ((analogHour / 12.0f) * 360.0f * ((float) rotationFactor));

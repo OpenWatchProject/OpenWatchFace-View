@@ -47,6 +47,8 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 public class OpenWatchFaceDeserializer {
+    private static final String TAG = "OpenWatchFaceDeserializ";
+
     private final OpenWatchWatchFaceFile watchFaceFile;
     private final Resources resources;
     private OpenWatchWatchFace watchFace;
@@ -128,12 +130,16 @@ public class OpenWatchFaceDeserializer {
                 item = new WeatherItem(centerX, centerY, frames);
                 break;
             case OpenWatchWatchFaceConstants.TYPE_TEMPERATURE:
+                Log.d(TAG, "parseItem: TYPE_TEMPERATURE requested, but not implemented!");
                 break;
             case OpenWatchWatchFaceConstants.TYPE_STEPS:
+                Log.d(TAG, "parseItem: TYPE_STEPS requested, but not implemented!");
                 break;
             case OpenWatchWatchFaceConstants.TYPE_HEART_RATE:
+                Log.d(TAG, "parseItem: TYPE_HEART_RATE requested, but not implemented!");
                 break;
             case OpenWatchWatchFaceConstants.TYPE_BATTERY:
+                Log.d(TAG, "parseItem: TYPE_BATTERY requested, but not implemented!");
                 break;
             case OpenWatchWatchFaceConstants.TYPE_SPECIAL_SECOND:
                 item = new SpecialSecondItem(centerX, centerY, frames);
@@ -142,54 +148,75 @@ public class OpenWatchFaceDeserializer {
                 item = new YearItem(centerX, centerY, frames);
                 break;
             case OpenWatchWatchFaceConstants.TYPE_BATTERY_PICTURE_CIRCLE:
+                Log.d(TAG, "parseItem: TYPE_BATTERY_PICTURE_CIRCLE requested, but not implemented!");
                 break;
             case OpenWatchWatchFaceConstants.TYPE_STEPS_PICTURE_CIRCLE:
+                Log.d(TAG, "parseItem: TYPE_STEPS_PICTURE_CIRCLE requested, but not implemented!");
                 break;
             case OpenWatchWatchFaceConstants.TYPE_MOON_PHASE:
                 item = new MoonPhaseItem(centerX, centerY, frames);
                 break;
             case OpenWatchWatchFaceConstants.TYPE_YEAR_2:
+                Log.d(TAG, "parseItem: TYPE_YEAR_2 requested, but not implemented!");
                 break;
             case OpenWatchWatchFaceConstants.TYPE_MISSED_CALLS:
+                Log.d(TAG, "parseItem: TYPE_MISSED_CALLS requested, but not implemented!");
                 break;
             case OpenWatchWatchFaceConstants.TYPE_MISSED_SMS:
+                Log.d(TAG, "parseItem: TYPE_MISSED_SMS requested, but not implemented!");
                 break;
             case OpenWatchWatchFaceConstants.TYPE_BATTERY_CIRCLE:
+                Log.d(TAG, "parseItem: TYPE_BATTERY_CIRCLE requested, but not implemented!");
                 break;
             case OpenWatchWatchFaceConstants.TYPE_STEPS_PICTURE_WITH_CIRCLE_2:
+                Log.d(TAG, "parseItem: TYPE_STEPS_PICTURE_WITH_CIRCLE_2 requested, but not implemented!");
                 break;
             case OpenWatchWatchFaceConstants.TYPE_KCAL:
+                Log.d(TAG, "parseItem: TYPE_KCAL requested, but not implemented!");
                 break;
             case OpenWatchWatchFaceConstants.TYPE_MISSED_CALLS_SMS:
+                Log.d(TAG, "parseItem: TYPE_MISSED_CALLS_SMS requested, but not implemented!");
                 break;
             case OpenWatchWatchFaceConstants.TYPE_STEPS_CIRCLE:
+                Log.d(TAG, "parseItem: TYPE_STEPS_CIRCLE requested, but not implemented!");
                 break;
             case OpenWatchWatchFaceConstants.TYPE_KCAL_CIRCLE:
+                Log.d(TAG, "parseItem: TYPE_KCAL_CIRCLE requested, but not implemented!");
                 break;
             case OpenWatchWatchFaceConstants.TYPE_POWER_CIRCLE:
+                Log.d(TAG, "parseItem: TYPE_POWER_CIRCLE requested, but not implemented!");
                 break;
             case OpenWatchWatchFaceConstants.TYPE_DISTANCE_CIRCLE:
+                Log.d(TAG, "parseItem: TYPE_DISTANCE_CIRCLE requested, but not implemented!");
                 break;
             case OpenWatchWatchFaceConstants.TYPE_DISTANCE:
+                Log.d(TAG, "parseItem: TYPE_DISTANCE requested, but not implemented!");
                 break;
             case OpenWatchWatchFaceConstants.TYPE_BATTERY_IMAGE:
+                Log.d(TAG, "parseItem: TYPE_BATTERY_IMAGE requested, but not implemented!");
                 break;
             case OpenWatchWatchFaceConstants.TYPE_UNKNOWN_1:
+                Log.d(TAG, "parseItem: TYPE_UNKNOWN_1 requested, but not implemented!");
                 break;
             case OpenWatchWatchFaceConstants.TYPE_BATTERY_IMAGE_CHARGING:
+                Log.d(TAG, "parseItem: TYPE_BATTERY_IMAGE_CHARGING requested, but not implemented!");
                 break;
             case OpenWatchWatchFaceConstants.TYPE_TEXT_PEDOMETER:
+                Log.d(TAG, "parseItem: TYPE_TEXT_PEDOMETER requested, but not implemented!");
                 break;
             case OpenWatchWatchFaceConstants.TYPE_TEXT_HEARTRATE:
+                Log.d(TAG, "parseItem: TYPE_TEXT_HEARTRATE requested, but not implemented!");
                 break;
             case OpenWatchWatchFaceConstants.TYPE_CHARGING:
+                Log.d(TAG, "parseItem: TYPE_CHARGING requested, but not implemented!");
                 break;
             case OpenWatchWatchFaceConstants.TYPE_TAP_ACTION:
                 item = new TapActionItem(centerX, centerY, frames);
                 parseTapActionItem((TapActionItem) item, json);
-                Log.d("OpenWatchFaceDeserial", "parseItem: touch parsed");
+                Log.d(TAG, "parseItem: touch parsed");
                 break;
             case OpenWatchWatchFaceConstants.TYPE_YEAR_MONTH_DAY_2:
+                Log.d(TAG, "parseItem: TYPE_YEAR_MONTH_DAY_2 requested, but not implemented!");
                 break;
         }
 

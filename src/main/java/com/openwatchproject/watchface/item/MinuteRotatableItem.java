@@ -17,7 +17,7 @@ public class MinuteRotatableItem extends RotatableItem {
     float getAngle(Calendar calendar, DataRepository dataRepository) {
         float minuteAngle;
         float analogMinute = (float) calendar.get(Calendar.MINUTE)
-                + ((float) calendar.get(Calendar.SECOND) / (float) 60);
+                + ((float) calendar.get(Calendar.SECOND) / 60.0f);
 
         if (direction == OpenWatchWatchFaceConstants.DIRECTION_NORMAL) {
             minuteAngle = angle + ((analogMinute / 60.0f) * 360.0f * ((float) rotationFactor));

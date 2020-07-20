@@ -19,8 +19,6 @@ public abstract class RotatableItem extends AbstractItem {
      * A value equal to 0 will be ignored.
      *
      * Equivalent to ClockSkin's mulrotate
-     *
-     * Only valid if type == 0
      */
     int rotationFactor;
 
@@ -28,8 +26,6 @@ public abstract class RotatableItem extends AbstractItem {
      * Indicates the direction for the analog hand.
      * 0 = Clockwise
      * 1 = Anti-Clockwise
-     *
-     * Only valid if type == 0!
      */
     int direction;
 

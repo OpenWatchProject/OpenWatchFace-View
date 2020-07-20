@@ -17,7 +17,7 @@ public class SecondRotatableItem extends RotatableItem {
     float getAngle(Calendar calendar, DataRepository dataRepository) {
         float secondAngle;
         float analogSecond = (float) calendar.get(Calendar.SECOND)
-                + ((float) calendar.get(Calendar.MILLISECOND) / (float) 1000);
+                + ((float) calendar.get(Calendar.MILLISECOND) / 1000.0f);
 
         if (direction == OpenWatchWatchFaceConstants.DIRECTION_NORMAL) {
             secondAngle = angle + ((analogSecond / 60.0f) * 360.0f * ((float) rotationFactor));

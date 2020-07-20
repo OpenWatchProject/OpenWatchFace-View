@@ -17,7 +17,7 @@ public class BatteryCustomAngleRotatableItem extends RotatableItem {
 
     @Override
     float getAngle(Calendar calendar, DataRepository dataRepository) {
-        // TODO: Not implemented. Might be able to implementate with custom angle in the normal battery item
+        // TODO: Not implemented. Might be able to implement with custom angle in the normal battery item
         return 0.0f;
     }
 }
