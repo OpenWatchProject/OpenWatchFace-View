@@ -62,8 +62,9 @@ public class OpenWatchWatchFaceFile implements Closeable {
                     .openFileDescriptor(file.getUri(), "r");
 
             if (pfd != null) {
-                String fdPath = "/proc/self/fd/" + pfd.detachFd();
+                String fdPath = "/proc/self/fd/" + pfd.getFd();
                 zipFile = new ZipFile(fdPath);
+                pfd.close();
             } else {
                 throw new IOException("Watchface folder not accessible!");
             }
