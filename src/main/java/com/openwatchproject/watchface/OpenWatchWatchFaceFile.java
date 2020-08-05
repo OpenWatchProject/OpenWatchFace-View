@@ -1,12 +1,18 @@
 package com.openwatchproject.watchface;
 
+import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.os.ParcelFileDescriptor;
 
 import androidx.annotation.NonNull;
+import androidx.documentfile.provider.DocumentFile;
 
 import com.google.gson.Gson;
+
+import org.w3c.dom.Document;
 
 import java.io.Closeable;
 import java.io.File;
@@ -21,21 +27,20 @@ public class OpenWatchWatchFaceFile implements Closeable {
     private static final String WATCHFACE_JSON = "watchface.json";
     private static final String WATCHFACE_PREVIEW = "preview.png";
 
-    private File file;
+    private Context context;
+    private DocumentFile file;
     private ZipFile zipFile;
 
     private OpenWatchWatchFaceMetadata metadata;
     private Bitmap preview;
 
-    public OpenWatchWatchFaceFile(String filePath) {
-        init(new File(filePath));
+    public OpenWatchWatchFaceFile(Context context, Uri uri) {
+        this.context = context;
+        this.file = DocumentFile.fromSingleUri(context, uri);
     }
 
-    public OpenWatchWatchFaceFile(File file) {
-        init(file);
-    }
-
-    private void init(File file) {
+    public OpenWatchWatchFaceFile(Context context, DocumentFile file) {
+        this.context = context;
         this.file = file;
     }
 
@@ -47,13 +52,21 @@ public class OpenWatchWatchFaceFile implements Closeable {
         return getZippedFile(WATCHFACE_JSON);
     }
 
-    public File getFile() {
+    public DocumentFile getFile() {
         return file;
     }
 
     public InputStream getZippedFile(@NonNull String path) throws IOException {
         if (zipFile == null) {
-            zipFile = new ZipFile(file);
+            ParcelFileDescriptor pfd = context.getContentResolver()
+                    .openFileDescriptor(file.getUri(), "r");
+
+            if (pfd != null) {
+                String fdPath = "/proc/self/fd/" + pfd.detachFd();
+                zipFile = new ZipFile(fdPath);
+            } else {
+                throw new IOException("Watchface folder not accessible!");
+            }
         }
 
         ZipEntry entry = zipFile.getEntry(path);

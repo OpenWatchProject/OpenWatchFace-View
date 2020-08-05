@@ -2,6 +2,7 @@ package com.openwatchproject.watchface;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.net.Uri;
 import android.util.Log;
 
 import com.openwatchproject.watchface.item.AbstractItem;
@@ -36,7 +37,7 @@ public class OpenWatchWatchFace {
      */
     private ArrayList<TapActionItem> tapActionItems;
 
-    private String absolutePath;
+    private Uri absolutePath;
 
     public OpenWatchWatchFace(int width, int height) {
         this.width = width;
@@ -53,11 +54,11 @@ public class OpenWatchWatchFace {
         return height;
     }
 
-    public void setAbsolutePath(String absolutePath) {
+    public void setAbsolutePath(Uri absolutePath) {
         this.absolutePath = absolutePath;
     }
 
-    public String getAbsolutePath() {
+    public Uri getAbsolutePath() {
         return absolutePath;
     }
 

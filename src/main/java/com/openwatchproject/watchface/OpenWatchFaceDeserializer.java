@@ -67,7 +67,7 @@ public class OpenWatchFaceDeserializer {
         }
 
         watchFace = new OpenWatchWatchFace(json.get("width").getAsInt(), json.get("height").getAsInt());
-        watchFace.setAbsolutePath(watchFaceFile.getFile().getAbsolutePath());
+        watchFace.setAbsolutePath(watchFaceFile.getFile().getUri());
 
         JsonArray items = json.get("items").getAsJsonArray();
         for (JsonElement itemElement : items) {
