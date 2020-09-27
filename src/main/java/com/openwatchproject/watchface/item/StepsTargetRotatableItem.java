@@ -8,12 +8,12 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 public class StepsTargetRotatableItem extends RotatableItem {
-    public StepsTargetRotatableItem(int centerX, int centerY, int direction, ArrayList<Drawable> frames, float angle, int rotationFactor) {
-        super(centerX, centerY, frames, angle, rotationFactor, direction);
+    public StepsTargetRotatableItem(int centerX, int centerY, ArrayList<Drawable> frames, float startAngle, float maxAngle, int direction) {
+        super(centerX, centerY, frames, startAngle, maxAngle, direction);
     }
 
     @Override
-    float getAngle(Calendar calendar, DataRepository dataRepository) {
+    float getProgress(Calendar calendar, DataRepository dataRepository) {
         /*if (dataRepository == null) break;
         int steps = dataRepository.getSteps();
         int targetSteps = dataRepository.getTargetSteps();

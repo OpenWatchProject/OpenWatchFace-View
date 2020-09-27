@@ -16,18 +16,18 @@ public abstract class AbstractItem {
     /**
      * Indicates the (width) center for the item in pixels
      */
-    int centerX;
+    final int centerX;
 
     /**
      * Indicates the (height) center for the item in pixels
      */
-    int centerY;
+    final int centerY;
 
     /**
-     * An array of frames that need to be displayed
+     * An array of frames that need to be displayed.
      * Frame count must be at least 1. If it's greater than 1, it's an animation.
      */
-    private ArrayList<Drawable> frames;
+    private final ArrayList<Drawable> frames;
 
     public AbstractItem(int centerX, int centerY, ArrayList<Drawable> frames) {
         this.centerX = centerX;

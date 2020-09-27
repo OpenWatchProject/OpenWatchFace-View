@@ -3,27 +3,26 @@ package com.openwatchproject.watchface.item;
 import android.graphics.drawable.Drawable;
 
 import com.openwatchproject.watchface.DataRepository;
-import com.openwatchproject.watchface.OpenWatchWatchFaceConstants;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 
 public class BalanceRotatableItem extends RotatableItem {
-    public BalanceRotatableItem(int centerX, int centerY, int direction, ArrayList<Drawable> frames, float angle, int rotationFactor) {
-        super(centerX, centerY, frames, angle, rotationFactor, direction);
+    public BalanceRotatableItem(int centerX, int centerY, ArrayList<Drawable> frames, float startAngle, float maxAngle, int direction) {
+        super(centerX, centerY, frames, startAngle, maxAngle, direction);
     }
 
     @Override
-    float getAngle(Calendar calendar, DataRepository dataRepository) {
-        float balanceAngle;
-        float analogBalance = System.currentTimeMillis() % 2000;
+    float getProgress(Calendar calendar, DataRepository dataRepository) {
+        long millis = System.currentTimeMillis() % 2000;
+        float analogBalance;
 
-        if (analogBalance < 1000) {
-            balanceAngle = ((analogBalance * 6.0f) * ((float) rotationFactor)) / 1000.0f;
+        if (millis < 1000) {
+            analogBalance = millis;
         } else {
-            balanceAngle = ((((float) rotationFactor) * 6000.0f) / 1000.0f) - (((((float) (analogBalance - 1000)) * 6.0f) * ((float) rotationFactor)) / 1000.0f);
+            analogBalance = 2000 - millis;
         }
 
-        return balanceAngle;
+        return analogBalance / 1000.0f;
     }
 }

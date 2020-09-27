@@ -12,12 +12,11 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.openwatchproject.watchface.item.AbstractItem;
 import com.openwatchproject.watchface.item.BalanceRotatableItem;
-import com.openwatchproject.watchface.item.Battery180AngleRotatableItem;
-import com.openwatchproject.watchface.item.BatteryCustomAngleRotatableItem;
+import com.openwatchproject.watchface.item.BatteryRotatableItem;
 import com.openwatchproject.watchface.item.DayItem;
 import com.openwatchproject.watchface.item.DayRotatableItem;
 import com.openwatchproject.watchface.item.MoonPhaseItem;
-import com.openwatchproject.watchface.item.TwentyFourHoursRotatableItem;
+import com.openwatchproject.watchface.item.Hour24RotatableItem;
 import com.openwatchproject.watchface.item.DayOfWeekItem;
 import com.openwatchproject.watchface.item.WeatherItem;
 import com.openwatchproject.watchface.item.WeekdayRotatableItem;
@@ -72,24 +71,48 @@ public class OpenWatchFaceDeserializer {
         JsonArray items = json.get("items").getAsJsonArray();
         for (JsonElement itemElement : items) {
             JsonObject itemObject = itemElement.getAsJsonObject();
-            AbstractItem item = parseItem(itemObject);
-            if (item != null) {
+            try {
+                AbstractItem item = parseItem(itemObject);
                 watchFace.addItem(item);
                 if (item instanceof TapActionItem) {
                     watchFace.addTapActionItem((TapActionItem) item);
                 }
+            } catch (InvalidWatchFaceItemException e) {
+                e.printStackTrace();
             }
         }
 
         return watchFace;
     }
 
-    private AbstractItem parseItem(JsonObject json) {
+    private AbstractItem parseItem(JsonObject json) throws InvalidWatchFaceItemException {
         AbstractItem item = null;
-        int type = json.get("type").getAsInt();
-        int centerX = json.get("centerX").getAsInt();
-        int centerY = json.get("centerY").getAsInt();
+        int type;
+        int centerX;
+        int centerY;
         ArrayList<Drawable> frames = parseFrames(json);
+        JsonElement tmp;
+
+        tmp = json.get("type");
+        if (tmp != null) {
+            type = tmp.getAsInt();
+        } else {
+            throw new InvalidWatchFaceItemException();
+        }
+
+        tmp = json.get("center_x");
+        if (tmp != null) {
+            centerX = tmp.getAsInt();
+        } else {
+            throw new InvalidWatchFaceItemException();
+        }
+
+        tmp = json.get("center_y");
+        if (tmp != null) {
+            centerY = tmp.getAsInt();
+        } else {
+            throw new InvalidWatchFaceItemException();
+        }
 
         switch (type) {
             case OpenWatchWatchFaceConstants.TYPE_STATIC:
@@ -218,6 +241,8 @@ public class OpenWatchFaceDeserializer {
             case OpenWatchWatchFaceConstants.TYPE_YEAR_MONTH_DAY_2:
                 Log.d(TAG, "parseItem: TYPE_YEAR_MONTH_DAY_2 requested, but not implemented!");
                 break;
+            default:
+                throw new InvalidWatchFaceItemException();
         }
 
         return item;
@@ -250,56 +275,78 @@ public class OpenWatchFaceDeserializer {
         item.setRange(jsonObject.get("range").getAsInt());
     }
 
-    private RotatableItem parseRotatableItem(int centerX, int centerY, ArrayList<Drawable> frames, JsonObject json) {
+    private RotatableItem parseRotatableItem(int centerX, int centerY, ArrayList<Drawable> frames, JsonObject json) throws InvalidWatchFaceItemException {
         RotatableItem item = null;
-        int rotatableType = json.get("rotatableType").getAsInt();
-        float angle = json.get("angle").getAsFloat();
-        int rotationFactor = json.get("rotationFactor").getAsInt();
-        int direction = json.get("direction").getAsInt();
+        int rotatableType;
+        float startAngle = 0;
+        float maxAngle = 360;
+        int direction = OpenWatchWatchFaceConstants.DIRECTION_CLOCKWISE;
+        JsonElement tmp;
+
+        tmp = json.get("rotatable_type");
+        if (tmp != null) {
+            rotatableType = tmp.getAsInt();
+        } else {
+            throw new InvalidWatchFaceItemException();
+        }
+
+        tmp = json.get("start_angle");
+        if (tmp != null) {
+            startAngle = tmp.getAsFloat();
+        }
+
+        tmp = json.get("max_angle");
+        if (tmp != null) {
+            maxAngle = tmp.getAsFloat();
+        }
+
+        tmp = json.get("direction");
+        if (tmp != null) {
+            direction = tmp.getAsInt();
+        }
 
         switch (rotatableType) {
             case OpenWatchWatchFaceConstants.ROTATABLE_HOUR:
-                item = new HourRotatableItem(centerX, centerY, direction, frames, angle, rotationFactor);
+                item = new HourRotatableItem(centerX, centerY, frames, startAngle, maxAngle, direction);
                 break;
             case OpenWatchWatchFaceConstants.ROTATABLE_MINUTE:
-                item = new MinuteRotatableItem(centerX, centerY, direction, frames, angle, rotationFactor);
+                item = new MinuteRotatableItem(centerX, centerY, frames, startAngle, maxAngle, direction);
                 break;
             case OpenWatchWatchFaceConstants.ROTATABLE_SECOND:
-                item = new SecondRotatableItem(centerX, centerY, direction, frames, angle, rotationFactor);
+                item = new SecondRotatableItem(centerX, centerY, frames, startAngle, maxAngle, direction);
                 break;
             case OpenWatchWatchFaceConstants.ROTATABLE_MONTH:
-                item = new MonthRotatableItem(centerX, centerY, direction, frames, angle, rotationFactor);
+                item = new MonthRotatableItem(centerX, centerY, frames, startAngle, maxAngle, direction);
                 break;
             case OpenWatchWatchFaceConstants.ROTATABLE_WEEKDAY:
-                item = new WeekdayRotatableItem(centerX, centerY, direction, frames, angle, rotationFactor);
+                item = new WeekdayRotatableItem(centerX, centerY, frames, startAngle, maxAngle, direction);
                 break;
-            case OpenWatchWatchFaceConstants.ROTATABLE_BATTERY_180_ANGLE:
-                item = new Battery180AngleRotatableItem(centerX, centerY, direction, frames, angle, rotationFactor);
+            case OpenWatchWatchFaceConstants.ROTATABLE_BATTERY:
+                item = new BatteryRotatableItem(centerX, centerY, frames, startAngle, maxAngle, direction);
                 break;
-            case OpenWatchWatchFaceConstants.ROTATABLE_24_HOURS:
-                item = new TwentyFourHoursRotatableItem(centerX, centerY, direction, frames, angle, rotationFactor);
+            case OpenWatchWatchFaceConstants.ROTATABLE_HOUR_24:
+                item = new Hour24RotatableItem(centerX, centerY, frames, startAngle, maxAngle, direction);
                 break;
             case OpenWatchWatchFaceConstants.ROTATABLE_HOUR_SHADOW:
-                item = new HourShadowRotatableItem(centerX, centerY, direction, frames, angle, rotationFactor);
+                item = new HourShadowRotatableItem(centerX, centerY, frames, startAngle, maxAngle, direction);
                 break;
             case OpenWatchWatchFaceConstants.ROTATABLE_MINUTE_SHADOW:
-                item = new MinuteShadowRotatableItem(centerX, centerY, direction, frames, angle, rotationFactor);
+                item = new MinuteShadowRotatableItem(centerX, centerY, frames, startAngle, maxAngle, direction);
                 break;
             case OpenWatchWatchFaceConstants.ROTATABLE_SECOND_SHADOW:
-                item = new SecondShadowRotatableItem(centerX, centerY, direction, frames, angle, rotationFactor);
+                item = new SecondShadowRotatableItem(centerX, centerY, frames, startAngle, maxAngle, direction);
                 break;
             case OpenWatchWatchFaceConstants.ROTATABLE_DAY:
-                item = new DayRotatableItem(centerX, centerY, direction, frames, angle, rotationFactor);
-                break;
-            case OpenWatchWatchFaceConstants.ROTATABLE_BATTERY_CUSTOM_ANGLE:
-                //item = new BatteryCustomAngleRotatableItem(centerX, centerY, direction, frames, angle, rotationFactor);
+                item = new DayRotatableItem(centerX, centerY, frames, startAngle, maxAngle, direction);
                 break;
             case OpenWatchWatchFaceConstants.ROTATABLE_ROTATE_MODE:
                 //item = parseRotatableRotateModeItem();
                 break;
             case OpenWatchWatchFaceConstants.ROTATABLE_BALANCE:
-                item = new BalanceRotatableItem(centerX, centerY, direction, frames, angle, rotationFactor);
+                item = new BalanceRotatableItem(centerX, centerY, frames, startAngle, maxAngle, direction);
                 break;
+            default:
+                throw new InvalidWatchFaceItemException();
         }
 
         return item;
@@ -308,4 +355,5 @@ public class OpenWatchFaceDeserializer {
     private RotatableItem parseRotatableRotateModeItem() {
         return null;
     }
+
 }

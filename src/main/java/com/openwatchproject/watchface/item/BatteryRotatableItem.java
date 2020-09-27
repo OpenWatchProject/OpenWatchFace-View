@@ -7,15 +7,15 @@ import com.openwatchproject.watchface.DataRepository;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-public class WeekdayRotatableItem extends RotatableItem {
-    public WeekdayRotatableItem(int centerX, int centerY, ArrayList<Drawable> frames, float startAngle, float maxAngle, int direction) {
+public class BatteryRotatableItem extends RotatableItem {
+    public BatteryRotatableItem(int centerX, int centerY, ArrayList<Drawable> frames, float startAngle, float maxAngle, int direction) {
         super(centerX, centerY, frames, startAngle, maxAngle, direction);
     }
 
     @Override
     float getProgress(Calendar calendar, DataRepository dataRepository) {
-        float analogWeekday = (float) (calendar.get(Calendar.DAY_OF_WEEK) - 2); // Sunday = -2, Monday = -1, Tuesday = 0, etc
+        float analogBattery = (float) dataRepository.getBatteryPercentage();
 
-        return analogWeekday / 7.0f;
+        return analogBattery / 100.0f;
     }
 }
