@@ -17,18 +17,10 @@ public class OpenWatchWatchFaceConstants {
     public static final int ROTATABLE_MINUTE_SHADOW = 8;
     public static final int ROTATABLE_SECOND_SHADOW = 9;
     public static final int ROTATABLE_DAY = 10;
-    public static final int ROTATABLE_ROTATE_MODE = 11;
-    public static final int ROTATABLE_BALANCE = 12;
-
-    public static final int ROTATE_MODE_HOUR12 = 0;
-    public static final int ROTATE_MODE_MINUTE = 1;
-    public static final int ROTATE_MODE_MILLISECOND = 2;
-    public static final int ROTATE_MODE_MONTH = 3;
-    public static final int ROTATE_MODE_WEEKDAY = 4;
-    public static final int ROTATE_MODE_BATTERY = 5;
-    public static final int ROTATE_MODE_HOUR24 = 6;
-    public static final int ROTATE_MODE_STEPS = 7;
-    public static final int ROTATE_MODE_DAY = 8;
+    public static final int ROTATABLE_BALANCE = 11;
+    public static final int ROTATABLE_STEP = 12;
+    public static final int ROTATABLE_KCAL = 13;
+    public static final int ROTATABLE_DISTANCE = 14;
 
     public static final int TYPE_STATIC = 0;
     public static final int TYPE_ROTATABLE = 1;

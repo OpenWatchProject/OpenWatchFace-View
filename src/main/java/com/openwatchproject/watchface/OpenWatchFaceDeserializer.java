@@ -15,9 +15,12 @@ import com.openwatchproject.watchface.item.BalanceRotatableItem;
 import com.openwatchproject.watchface.item.BatteryRotatableItem;
 import com.openwatchproject.watchface.item.DayItem;
 import com.openwatchproject.watchface.item.DayRotatableItem;
+import com.openwatchproject.watchface.item.DistanceRotatableItem;
+import com.openwatchproject.watchface.item.KCalRotatableItem;
 import com.openwatchproject.watchface.item.MoonPhaseItem;
 import com.openwatchproject.watchface.item.Hour24RotatableItem;
 import com.openwatchproject.watchface.item.DayOfWeekItem;
+import com.openwatchproject.watchface.item.StepRotatableItem;
 import com.openwatchproject.watchface.item.WeatherItem;
 import com.openwatchproject.watchface.item.WeekdayRotatableItem;
 import com.openwatchproject.watchface.item.HourItem;
@@ -44,6 +47,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.List;
 
 public class OpenWatchFaceDeserializer {
     private static final String TAG = "OpenWatchFaceDeserializ";
@@ -86,7 +90,7 @@ public class OpenWatchFaceDeserializer {
     }
 
     private AbstractItem parseItem(JsonObject json) throws InvalidWatchFaceItemException {
-        AbstractItem item = null;
+        AbstractItem item;
         int type;
         int centerX;
         int centerY;
@@ -154,16 +158,16 @@ public class OpenWatchFaceDeserializer {
                 break;
             case OpenWatchWatchFaceConstants.TYPE_TEMPERATURE:
                 Log.d(TAG, "parseItem: TYPE_TEMPERATURE requested, but not implemented!");
-                break;
+                throw new InvalidWatchFaceItemException();
             case OpenWatchWatchFaceConstants.TYPE_STEPS:
                 Log.d(TAG, "parseItem: TYPE_STEPS requested, but not implemented!");
-                break;
+                throw new InvalidWatchFaceItemException();
             case OpenWatchWatchFaceConstants.TYPE_HEART_RATE:
                 Log.d(TAG, "parseItem: TYPE_HEART_RATE requested, but not implemented!");
-                break;
+                throw new InvalidWatchFaceItemException();
             case OpenWatchWatchFaceConstants.TYPE_BATTERY:
                 Log.d(TAG, "parseItem: TYPE_BATTERY requested, but not implemented!");
-                break;
+                throw new InvalidWatchFaceItemException();
             case OpenWatchWatchFaceConstants.TYPE_SPECIAL_SECOND:
                 item = new SpecialSecondItem(centerX, centerY, frames);
                 break;
@@ -172,67 +176,67 @@ public class OpenWatchFaceDeserializer {
                 break;
             case OpenWatchWatchFaceConstants.TYPE_BATTERY_PICTURE_CIRCLE:
                 Log.d(TAG, "parseItem: TYPE_BATTERY_PICTURE_CIRCLE requested, but not implemented!");
-                break;
+                throw new InvalidWatchFaceItemException();
             case OpenWatchWatchFaceConstants.TYPE_STEPS_PICTURE_CIRCLE:
                 Log.d(TAG, "parseItem: TYPE_STEPS_PICTURE_CIRCLE requested, but not implemented!");
-                break;
+                throw new InvalidWatchFaceItemException();
             case OpenWatchWatchFaceConstants.TYPE_MOON_PHASE:
                 item = new MoonPhaseItem(centerX, centerY, frames);
                 break;
             case OpenWatchWatchFaceConstants.TYPE_YEAR_2:
                 Log.d(TAG, "parseItem: TYPE_YEAR_2 requested, but not implemented!");
-                break;
+                throw new InvalidWatchFaceItemException();
             case OpenWatchWatchFaceConstants.TYPE_MISSED_CALLS:
                 Log.d(TAG, "parseItem: TYPE_MISSED_CALLS requested, but not implemented!");
-                break;
+                throw new InvalidWatchFaceItemException();
             case OpenWatchWatchFaceConstants.TYPE_MISSED_SMS:
                 Log.d(TAG, "parseItem: TYPE_MISSED_SMS requested, but not implemented!");
-                break;
+                throw new InvalidWatchFaceItemException();
             case OpenWatchWatchFaceConstants.TYPE_BATTERY_CIRCLE:
                 Log.d(TAG, "parseItem: TYPE_BATTERY_CIRCLE requested, but not implemented!");
-                break;
+                throw new InvalidWatchFaceItemException();
             case OpenWatchWatchFaceConstants.TYPE_STEPS_PICTURE_WITH_CIRCLE_2:
                 Log.d(TAG, "parseItem: TYPE_STEPS_PICTURE_WITH_CIRCLE_2 requested, but not implemented!");
-                break;
+                throw new InvalidWatchFaceItemException();
             case OpenWatchWatchFaceConstants.TYPE_KCAL:
                 Log.d(TAG, "parseItem: TYPE_KCAL requested, but not implemented!");
-                break;
+                throw new InvalidWatchFaceItemException();
             case OpenWatchWatchFaceConstants.TYPE_MISSED_CALLS_SMS:
                 Log.d(TAG, "parseItem: TYPE_MISSED_CALLS_SMS requested, but not implemented!");
-                break;
+                throw new InvalidWatchFaceItemException();
             case OpenWatchWatchFaceConstants.TYPE_STEPS_CIRCLE:
                 Log.d(TAG, "parseItem: TYPE_STEPS_CIRCLE requested, but not implemented!");
-                break;
+                throw new InvalidWatchFaceItemException();
             case OpenWatchWatchFaceConstants.TYPE_KCAL_CIRCLE:
                 Log.d(TAG, "parseItem: TYPE_KCAL_CIRCLE requested, but not implemented!");
-                break;
+                throw new InvalidWatchFaceItemException();
             case OpenWatchWatchFaceConstants.TYPE_POWER_CIRCLE:
                 Log.d(TAG, "parseItem: TYPE_POWER_CIRCLE requested, but not implemented!");
-                break;
+                throw new InvalidWatchFaceItemException();
             case OpenWatchWatchFaceConstants.TYPE_DISTANCE_CIRCLE:
                 Log.d(TAG, "parseItem: TYPE_DISTANCE_CIRCLE requested, but not implemented!");
-                break;
+                throw new InvalidWatchFaceItemException();
             case OpenWatchWatchFaceConstants.TYPE_DISTANCE:
                 Log.d(TAG, "parseItem: TYPE_DISTANCE requested, but not implemented!");
-                break;
+                throw new InvalidWatchFaceItemException();
             case OpenWatchWatchFaceConstants.TYPE_BATTERY_IMAGE:
                 Log.d(TAG, "parseItem: TYPE_BATTERY_IMAGE requested, but not implemented!");
-                break;
+                throw new InvalidWatchFaceItemException();
             case OpenWatchWatchFaceConstants.TYPE_UNKNOWN_1:
                 Log.d(TAG, "parseItem: TYPE_UNKNOWN_1 requested, but not implemented!");
-                break;
+                throw new InvalidWatchFaceItemException();
             case OpenWatchWatchFaceConstants.TYPE_BATTERY_IMAGE_CHARGING:
                 Log.d(TAG, "parseItem: TYPE_BATTERY_IMAGE_CHARGING requested, but not implemented!");
-                break;
+                throw new InvalidWatchFaceItemException();
             case OpenWatchWatchFaceConstants.TYPE_TEXT_PEDOMETER:
                 Log.d(TAG, "parseItem: TYPE_TEXT_PEDOMETER requested, but not implemented!");
-                break;
+                throw new InvalidWatchFaceItemException();
             case OpenWatchWatchFaceConstants.TYPE_TEXT_HEARTRATE:
                 Log.d(TAG, "parseItem: TYPE_TEXT_HEARTRATE requested, but not implemented!");
-                break;
+                throw new InvalidWatchFaceItemException();
             case OpenWatchWatchFaceConstants.TYPE_CHARGING:
                 Log.d(TAG, "parseItem: TYPE_CHARGING requested, but not implemented!");
-                break;
+                throw new InvalidWatchFaceItemException();
             case OpenWatchWatchFaceConstants.TYPE_TAP_ACTION:
                 item = new TapActionItem(centerX, centerY, frames);
                 parseTapActionItem((TapActionItem) item, json);
@@ -240,7 +244,7 @@ public class OpenWatchFaceDeserializer {
                 break;
             case OpenWatchWatchFaceConstants.TYPE_YEAR_MONTH_DAY_2:
                 Log.d(TAG, "parseItem: TYPE_YEAR_MONTH_DAY_2 requested, but not implemented!");
-                break;
+                throw new InvalidWatchFaceItemException();
             default:
                 throw new InvalidWatchFaceItemException();
         }
@@ -275,12 +279,12 @@ public class OpenWatchFaceDeserializer {
         item.setRange(jsonObject.get("range").getAsInt());
     }
 
-    private RotatableItem parseRotatableItem(int centerX, int centerY, ArrayList<Drawable> frames, JsonObject json) throws InvalidWatchFaceItemException {
-        RotatableItem item = null;
+    private RotatableItem parseRotatableItem(int centerX, int centerY, List<Drawable> frames, JsonObject json) throws InvalidWatchFaceItemException {
+        RotatableItem item;
         int rotatableType;
-        float startAngle = 0;
-        float maxAngle = 360;
-        int direction = OpenWatchWatchFaceConstants.DIRECTION_CLOCKWISE;
+        float startAngle;
+        float maxAngle;
+        int direction;
         JsonElement tmp;
 
         tmp = json.get("rotatable_type");
@@ -293,16 +297,22 @@ public class OpenWatchFaceDeserializer {
         tmp = json.get("start_angle");
         if (tmp != null) {
             startAngle = tmp.getAsFloat();
+        } else {
+            startAngle = 0;
         }
 
         tmp = json.get("max_angle");
         if (tmp != null) {
             maxAngle = tmp.getAsFloat();
+        } else {
+            maxAngle = 360;
         }
 
         tmp = json.get("direction");
         if (tmp != null) {
             direction = tmp.getAsInt();
+        } else {
+            direction = OpenWatchWatchFaceConstants.DIRECTION_CLOCKWISE;
         }
 
         switch (rotatableType) {
@@ -339,11 +349,17 @@ public class OpenWatchFaceDeserializer {
             case OpenWatchWatchFaceConstants.ROTATABLE_DAY:
                 item = new DayRotatableItem(centerX, centerY, frames, startAngle, maxAngle, direction);
                 break;
-            case OpenWatchWatchFaceConstants.ROTATABLE_ROTATE_MODE:
-                //item = parseRotatableRotateModeItem();
-                break;
             case OpenWatchWatchFaceConstants.ROTATABLE_BALANCE:
                 item = new BalanceRotatableItem(centerX, centerY, frames, startAngle, maxAngle, direction);
+                break;
+            case OpenWatchWatchFaceConstants.ROTATABLE_STEP:
+                item = new StepRotatableItem(centerX, centerY, frames, startAngle, maxAngle, direction);
+                break;
+            case OpenWatchWatchFaceConstants.ROTATABLE_KCAL:
+                item = new KCalRotatableItem(centerX, centerY, frames, startAngle, maxAngle, direction);
+                break;
+            case OpenWatchWatchFaceConstants.ROTATABLE_DISTANCE:
+                item = new DistanceRotatableItem(centerX, centerY, frames, startAngle, maxAngle, direction);
                 break;
             default:
                 throw new InvalidWatchFaceItemException();
@@ -351,9 +367,4 @@ public class OpenWatchFaceDeserializer {
 
         return item;
     }
-
-    private RotatableItem parseRotatableRotateModeItem() {
-        return null;
-    }
-
 }

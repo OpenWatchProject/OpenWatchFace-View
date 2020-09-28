@@ -1,33 +1,28 @@
 package com.openwatchproject.watchface;
 
 import android.annotation.SuppressLint;
-import android.content.ActivityNotFoundException;
 import android.content.BroadcastReceiver;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Canvas;
+import android.os.BatteryManager;
 import android.os.SystemClock;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
 import androidx.annotation.Nullable;
 
-import com.openwatchproject.watchface.item.TapActionItem;
-
 import java.util.Calendar;
-import java.util.List;
 import java.util.TimeZone;
 
 public class OpenWatchWatchFaceView extends View {
     private static final String TAG = "OpenWatchWatchFaceView";
 
     private Calendar calendar;
-    private DataRepository dataRepository;
-    private OpenWatchWatchFace watchFace;
+    private DataRepository dataRepository = null;
+    private OpenWatchWatchFace watchFace = null;
 
     private int viewWidth;
     private int viewHeight;
@@ -38,7 +33,7 @@ public class OpenWatchWatchFaceView extends View {
     private float lastTouchX;
     private float lastTouchY;
 
-    private boolean receivedRegistered;
+    private boolean receivedRegistered = false;
     private boolean forceStop = false;
     private boolean shouldRunTicker = false;
     private int framerate = 60;
@@ -46,9 +41,8 @@ public class OpenWatchWatchFaceView extends View {
     private final BroadcastReceiver receiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            if (Intent.ACTION_TIMEZONE_CHANGED.equals(intent.getAction())) {
-                updateTimeZone();
-            }
+            if (Intent.ACTION_TIMEZONE_CHANGED.equals(intent.getAction()))
+                calendar.setTimeZone(TimeZone.getDefault());
         }
     };
 
@@ -74,8 +68,62 @@ public class OpenWatchWatchFaceView extends View {
 
     private void init() {
         this.calendar = Calendar.getInstance();
-        this.dataRepository = null;
-        this.watchFace = null;
+        dataRepository = new DataRepository() {
+            @Override
+            public int getWeatherIcon() {
+                return 0;
+            }
+
+            @Override
+            public int getSteps() {
+                return 0;
+            }
+
+            @Override
+            public int getTargetSteps() {
+                return 1;
+            }
+
+            @Override
+            public int getDistance() {
+                return 0;
+            }
+
+            @Override
+            public int getTargetDistance() {
+                return 1;
+            }
+
+            @Override
+            public int getKCal() {
+                return 0;
+            }
+
+            @Override
+            public int getTargetKCal() {
+                return 1;
+            }
+
+            @Override
+            public int getWeatherTemp() {
+                return 0;
+            }
+
+            @Override
+            public int getHeartRate() {
+                return 0;
+            }
+
+            @Override
+            public boolean isBatteryCharging() {
+                return false;
+            }
+
+            @Override
+            public int getBatteryPercentage() {
+                return 50;
+            }
+        };
     }
 
     public void setWatchFace(OpenWatchWatchFace watchFace) {
@@ -156,10 +204,6 @@ public class OpenWatchWatchFaceView extends View {
         return watchFace;
     }
 
-    private void updateTimeZone() {
-        calendar.setTimeZone(TimeZone.getDefault());
-    }
-
     private final Runnable ticker = new Runnable() {
         public void run() {
             postInvalidateOnAnimation();
@@ -167,7 +211,8 @@ public class OpenWatchWatchFaceView extends View {
             long now = SystemClock.uptimeMillis();
             long next = now + ((1000 / framerate) - now % (1000 / framerate));
 
-            getHandler().postAtTime(ticker, next);
+            if (shouldRunTicker)
+                getHandler().postAtTime(ticker, next);
         }
     };
 

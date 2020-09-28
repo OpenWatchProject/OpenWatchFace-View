@@ -4,18 +4,18 @@ import android.graphics.drawable.Drawable;
 
 import com.openwatchproject.watchface.DataRepository;
 
-import java.util.List;
 import java.util.Calendar;
+import java.util.List;
 
-public class MonthRotatableItem extends RotatableItem {
-    public MonthRotatableItem(int centerX, int centerY, List<Drawable> frames, float startAngle, float maxAngle, int direction) {
+public class StepRotatableItem extends RotatableItem {
+    public StepRotatableItem(int centerX, int centerY, List<Drawable> frames, float startAngle, float maxAngle, int direction) {
         super(centerX, centerY, frames, startAngle, maxAngle, direction);
     }
 
     @Override
     float getProgress(Calendar calendar, DataRepository dataRepository) {
-        float analogMonth = (float) (calendar.get(Calendar.MONTH) + 1); // Calendar.MONTH starts at 0
+        float analogStep = dataRepository.getSteps();
 
-        return analogMonth / 12.0f;
+        return Math.min(analogStep / (float) dataRepository.getTargetSteps(), 1.0f);
     }
 }

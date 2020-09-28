@@ -4,11 +4,11 @@ import android.graphics.drawable.Drawable;
 
 import com.openwatchproject.watchface.DataRepository;
 
-import java.util.ArrayList;
+import java.util.List;
 import java.util.Calendar;
 
 public class Hour24RotatableItem extends RotatableItem {
-    public Hour24RotatableItem(int centerX, int centerY, ArrayList<Drawable> frames, float startAngle, float maxAngle, int direction) {
+    public Hour24RotatableItem(int centerX, int centerY, List<Drawable> frames, float startAngle, float maxAngle, int direction) {
         super(centerX, centerY, frames, startAngle, maxAngle, direction);
     }
 
