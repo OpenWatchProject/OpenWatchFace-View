@@ -6,7 +6,6 @@ import android.util.Log;
 
 import com.openwatchproject.watchface.DataRepository;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -27,9 +26,9 @@ public abstract class AbstractItem {
      * An array of frames that need to be displayed.
      * Frame count must be at least 1. If it's greater than 1, it's an animation.
      */
-    private final ArrayList<Drawable> frames;
+    private final List<Drawable> frames;
 
-    public AbstractItem(int centerX, int centerY, ArrayList<Drawable> frames) {
+    public AbstractItem(int centerX, int centerY, List<Drawable> frames) {
         this.centerX = centerX;
         this.centerY = centerY;
         this.frames = frames;
@@ -64,7 +63,7 @@ public abstract class AbstractItem {
         return frames.size() > 0;
     }
 
-    public ArrayList<Drawable> getFrames() {
+    public List<Drawable> getFrames() {
         return frames;
     }
 

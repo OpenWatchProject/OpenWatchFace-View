@@ -4,11 +4,10 @@ import android.content.ActivityNotFoundException;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
 import android.util.Log;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class TapActionItem extends StaticItem {
     private static final String TAG = "TapActionItem";
@@ -39,7 +38,7 @@ public class TapActionItem extends StaticItem {
      */
     private int range;
 
-    public TapActionItem(int centerX, int centerY, ArrayList<Drawable> frames) {
+    public TapActionItem(int centerX, int centerY, List<Drawable> frames) {
         super(centerX, centerY, frames);
     }
 

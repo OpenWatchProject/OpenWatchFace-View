@@ -4,13 +4,12 @@ import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
 
 import com.openwatchproject.watchface.DataRepository;
-import com.openwatchproject.watchface.OpenWatchWatchFaceView;
 
-import java.util.ArrayList;
+import java.util.List;
 import java.util.Calendar;
 
 public class StaticItem extends AbstractItem {
-    public StaticItem(int centerX, int centerY, ArrayList<Drawable> frames) {
+    public StaticItem(int centerX, int centerY, List<Drawable> frames) {
         super(centerX, centerY, frames);
     }
 

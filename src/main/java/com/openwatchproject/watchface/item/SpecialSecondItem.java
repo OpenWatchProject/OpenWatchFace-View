@@ -4,13 +4,12 @@ import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
 
 import com.openwatchproject.watchface.DataRepository;
-import com.openwatchproject.watchface.OpenWatchWatchFaceView;
 
-import java.util.ArrayList;
+import java.util.List;
 import java.util.Calendar;
 
 public class SpecialSecondItem extends AbstractItem {
-    public SpecialSecondItem(int centerX, int centerY, ArrayList<Drawable> frames) {
+    public SpecialSecondItem(int centerX, int centerY, List<Drawable> frames) {
         super(centerX, centerY, frames);
     }
 
